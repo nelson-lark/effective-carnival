@@ -1,0 +1,88 @@
+{
+    "deve-DynamoFeedbackTable": [
+      {
+        "PutRequest": {
+          "Item": {
+            "PK": {
+              "S": "USER#d09edcfd-8698-43a4-ad8d-0a4297dccc45"
+            },
+            "SK": {
+              "S": "FEEDBACK#0f98eb97-4d6d-4cc9-9831-9b9ac550c76b"
+            },
+            "username": {
+              "S": "d09edcfd-8698-43a4-ad8d-0a4297dccc45"
+            },
+            "time": {
+              "S": "2021-06-11T11:42:43.551Z"
+            },
+            "description": {
+              "S": "This project is great!"
+            }
+          }
+        }
+      },
+      {
+        "PutRequest": {
+          "Item": {
+            "PK": {
+              "S": "USER#d09edcfd-8698-43a4-ad8d-0a4297dccc45"
+            },
+            "SK": {
+              "S": "FEEDBACK#0345749e-c14a-4e7c-8b19-fc6203500b12"
+            },
+            "username": {
+              "S": "d09edcfd-8698-43a4-ad8d-0a4297dccc45"
+            },
+            "time": {
+              "S": "2021-06-12T12:42:43.551Z"
+            },
+            "description": {
+              "S": "This project is fine!"
+            }
+          }
+        }
+      },
+      {
+        "PutRequest": {
+          "Item": {
+            "PK": {
+              "S": "USER#d09edcfd-8698-43a4-ad8d-0a4297dccc45"
+            },
+            "SK": {
+              "S": "FEEDBACK#088fbda1-8cab-4efd-b2c0-cd1caf480d80"
+            },
+            "username": {
+              "S": "d09edcfd-8698-43a4-ad8d-0a4297dccc45"
+            },
+            "time": {
+              "S": "2021-06-13T13:42:43.551Z"
+            },
+            "description": {
+              "S": "This project is bad!"
+            }
+          }
+        }
+      },
+      {
+        "PutRequest": {
+          "Item": {
+            "PK": {
+              "S": "USER#d09edcfd-8698-43a4-ad8d-0a4297dccc45"
+            },
+            "SK": {
+              "S": "FEEDBACK#283efa61-3740-45be-93d5-fc774b598914"
+            },
+            "username": {
+              "S": "d09edcfd-8698-43a4-ad8d-0a4297dccc45"
+            },
+            "time": {
+              "S": "2021-06-14T14:42:43.551Z"
+            },
+            "description": {
+              "S": "This project sucks!"
+            }
+          }
+        }
+      }
+    ]
+  }

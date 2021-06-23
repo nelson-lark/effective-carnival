@@ -1,0 +1,23 @@
+type Feedback {
+  PK: ID!
+  SK: ID!
+  username: String!
+  time: AWSDateTime!
+  description: String!
+}
+
+input FeedbackInput {
+  description: String!
+}
+
+extend type Mutation {
+  sendFeedback(feedback: FeedbackInput!): Feedback
+}
+
+extend type Query {
+  getAllFeedbacks: [Feedback!]! @aws_auth(cognito_groups: ["admin"])
+}
+
+directive @aws_auth(cognito_groups: [String]) on FIELD_DEFINITION
+
+scalar AWSDateTime

@@ -1,0 +1,9 @@
+query getAllFeedbacks {
+  feedbacks: getAllFeedbacks {
+    PK
+    SK
+    username
+    time
+    description
+  }
+}

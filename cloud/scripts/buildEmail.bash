@@ -1,0 +1,1 @@
+npm run buildMjml -- $1.mjml -o $1.html --config.minify

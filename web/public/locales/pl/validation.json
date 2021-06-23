@@ -1,0 +1,17 @@
+{
+  "invalid": "Niepoprawna wartość pola {{field}}",
+
+  "is too long": "{{field}} musi zawierać conajwyżej {{length}} znaków",
+  "is too short": "{{field}} musi zawierać conajmniej {{length}} znaków",
+  "is a required field": "{{field}} jest wymaganym polem",
+
+  "must be a match": "{{field}} musi zgodne",
+  "provide valid phone number": "Prosimy o podanie poprawnego numeru telefonu zaczynającego się numerem kierunkowym np. +48",
+
+  "should contain lower case letters": "{{field}} musi zawierać małą literę",
+  "should contain upper case letters": "{{field}} musi zawierać wielką literę",
+  "should contain digits": "{{field}} musi zawierać cyfrę",
+
+  "Incorrect username or password.": "Niepoprawna nazwa użytkownika lub hasło.",
+  "Password attempts exceeded": "Przekroczono ilość prób logowania."
+}

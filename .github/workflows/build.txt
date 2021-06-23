@@ -1,0 +1,1 @@
+Build is done in Amplify Console, see https://github.com/codeandpepper/generate/blob/768d1eb7feb7f463014bc78d59c320dab241fdb8/templates/cloud/lib/common/amplifyCdkConstruct.ts.hbs#L171

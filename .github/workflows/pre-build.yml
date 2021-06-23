@@ -1,0 +1,49 @@
+name: Pre-Build
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  test-web:
+    name: Test web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        working-directory: ./web
+        run: yarn install
+      - name: Frontend tests
+        working-directory: ./web
+        run: yarn test:nowatch
+        env:
+          CI: true
+      - name: Upload 'coverage' artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: web-coverage
+          path: web/coverage
+  test-cloud:
+    name: Test cloud
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        working-directory: ./cloud
+        run: yarn install
+      - name: Build GraphQL schema
+        working-directory: ./cloud
+        run: yarn schema
+      - name: Cloud tests
+        working-directory: ./cloud
+        run: yarn test:nowatch
+        env:
+          CI: true
+      - name: Upload 'coverage' artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: cloud-coverage
+          path: cloud/coverage

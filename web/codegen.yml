@@ -1,0 +1,17 @@
+overwrite: true
+schema: "../cloud/lib/common/schema.graphql"
+documents: "src/**/!(*.generated).{graphql,ts,tsx}"
+generates:
+  src/types/generated/types.ts:
+    plugins:
+      - typescript
+  src/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .generated.tsx
+      baseTypesPath: types/generated/types.ts
+    plugins:
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      preResolveTypes: true

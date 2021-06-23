@@ -1,0 +1,5 @@
+mutation sendFeedback($feedback: FeedbackInput!) {
+  sendFeedback(feedback: $feedback) {
+    description
+  }
+}

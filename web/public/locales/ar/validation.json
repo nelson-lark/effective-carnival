@@ -1,0 +1,17 @@
+{
+  "invalid": "Invalid {{field}}",
+
+  "is too long": "{{field}} is too long, max. {{length}} characters",
+  "is too short": "{{field}} should contain at least {{length}} characters",
+  "is a required field": "{{field}} is a required field",
+
+  "must be a match": "{{field}} must be a match",
+  "provide valid phone number": "Please provide valid phone number starting with the country code, e.g. +44",
+
+  "should contain lower case letters": "{{field}} should contain lower case letters",
+  "should contain upper case letters": "{{field}} should contain upper case letters",
+  "should contain digits": "{{field}} should contain digits",
+
+  "Incorrect username or password.": "Incorrect username or password.",
+  "Password attempts exceeded": "Password attempts exceeded."
+}

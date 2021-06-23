@@ -1,0 +1,13 @@
+#set($feedback = $context.arguments.feedback)
+$util.quiet($feedback.put("username", $context.identity.username))
+$util.quiet($feedback.put("time", $util.time.nowISO8601()))
+
+{
+    "version": "2018-05-29",
+    "operation": "PutItem",
+    "key": {
+        "PK": $util.dynamodb.toDynamoDBJson("USER#${context.identity.sub}"),
+        "SK": $util.dynamodb.toDynamoDBJson("FEEDBACK#${util.autoId()}")
+    },
+    "attributeValues": $util.dynamodb.toMapValuesJson($feedback)
+}

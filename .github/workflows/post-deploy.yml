@@ -1,0 +1,86 @@
+name: Post-Deploy
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+    types: [opened, synchronize, reopened]
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_DEVELOP }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEVELOP }}
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION_DEVELOP }}
+  AWS_AMPLIFY_APP_ID: ${{ secrets.AWS_AMPLIFY_APP_ID_DEVELOP }}
+
+jobs:
+  wait-for-deploy:
+    name: Wait for deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Get branch name and set AWS_AMPLIFY_* envs
+        if: github.event_name == 'push'
+        run: |
+          GITHUB_BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})
+          echo "AWS_AMPLIFY_BRANCH_NAME=$(echo $GITHUB_BRANCH_NAME)" >> $GITHUB_ENV
+          echo "AWS_AMPLIFY_JOB_COMMIT_ID=$(echo $GITHUB_SHA)" >> $GITHUB_ENV
+      - name: Get pull request number and set AWS_AMPLIFY_* envs
+        if: github.event_name == 'pull_request'
+        run: |
+          GITHUB_PULL_REQUEST_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          echo "AWS_AMPLIFY_BRANCH_NAME=pr-$(echo $GITHUB_PULL_REQUEST_NUMBER)" >> $GITHUB_ENV
+          echo "AWS_AMPLIFY_JOB_COMMIT_ID=$(echo ${{github.event.pull_request.head.sha}})" >> $GITHUB_ENV
+      - name: Wait for Amplify job
+        run: |
+          chmod +x ./.github/wait-for-amplify-job.sh
+          ./.github/wait-for-amplify-job.sh $AWS_AMPLIFY_APP_ID $AWS_AMPLIFY_BRANCH_NAME $AWS_AMPLIFY_JOB_COMMIT_ID 180 20
+        env:
+          AWS_AMPLIFY_BRANCH_NAME: ${{ env.AWS_AMPLIFY_BRANCH_NAME }}
+          AWS_AMPLIFY_JOB_COMMIT_ID: ${{ env.AWS_AMPLIFY_JOB_COMMIT_ID }}
+  cypress:
+    name: Cypress
+    needs: [wait-for-deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Install dependencies
+        working-directory: ./web
+        run: yarn install
+      # TODO: reduce code duplication (previous job)
+      - name: Get branch name and set AWS_AMPLIFY_* envs
+        if: github.event_name == 'push'
+        run: |
+          GITHUB_BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})
+          echo "AWS_AMPLIFY_BRANCH_NAME=$(echo $GITHUB_BRANCH_NAME)" >> $GITHUB_ENV
+      - name: Get branch name and set AWS_AMPLIFY_* envs
+        if: github.event_name == 'pull_request'
+        run: |
+          GITHUB_PULL_REQUEST_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          echo "AWS_AMPLIFY_BRANCH_NAME=pr-$(echo $GITHUB_PULL_REQUEST_NUMBER)" >> $GITHUB_ENV
+      - name: Cypress
+        working-directory: ./web
+        run: |
+          source ../cloud/scripts/setEnvs.bash
+          cp .env.test.example .env.test
+          sed -i "s|http://localhost:3000|https://${AWS_AMPLIFY_BRANCH_NAME}.${AWS_AMPLIFY_APP_ID}.amplifyapp.com|g" .env.test
+          sed -i "s|CYPRESS_AWS_COGNITO_USER_POOL_ID=<your_value>|CYPRESS_AWS_COGNITO_USER_POOL_ID=${REACT_APP_EFFECTIVE_CARNIVAL_AWS_COGNITO_USER_POOL_ID}|g" .env.test
+          yarn cy:run
+        env:
+          AWS_AMPLIFY_APP_ID: ${{ secrets.AWS_AMPLIFY_APP_ID_DEVELOP }}
+          AWS_AMPLIFY_BRANCH_NAME: ${{ env.AWS_AMPLIFY_BRANCH_NAME }}
+      - name: Upload screenshots as artifacts
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: web/cypress/screenshots

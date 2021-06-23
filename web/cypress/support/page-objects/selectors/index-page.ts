@@ -1,0 +1,17 @@
+export const indexPageSelectors = {
+  sideMenuDrawerContainer: "side-menu-drawer-container",
+  sideMenuOpenButton: "open-side-menu-button",
+  closeSideMenuButton: "close-side-menu-button",
+  adminButtonInSideMenu: "admin-button-in-side-menu",
+  settingsButtonInSideMenu: "settings-button-in-side-menu",
+  sendFeedbackButtonInSideMenu: "send-feedback-button-in-side-menu",
+  helpButtonInSideMenu: "help-button-in-side-menu",
+  logoLinkInSideMenu: "logo-link-in-side-menu",
+  signInButtonOnAppBar: "sign-in-button-on-app-bar",
+  userAvatarButton: "user-avatar-button",
+  userEmailInUserMenu: "user-email-in-user-menu",
+  signOutButtonInUserMenu: "sign-out-user-menu-item",
+  settingsButtonInUserMenu: "settings-user-menu-item",
+  sendFeedbackButtonInUserMenu: "send-feedback-user-menu-item",
+  helpButtonInUserMenu: "help-user-menu-item",
+} as const;
