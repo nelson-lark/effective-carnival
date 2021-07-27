@@ -35,6 +35,18 @@ export type GetAllFeedbacksResponse = {
   totalCount: Scalars["Int"];
 };
 
+export type GetUsersArgs = {
+  searchBy?: Maybe<Scalars["String"]>;
+  limit: Scalars["Int"];
+  paginationToken?: Maybe<Scalars["String"]>;
+};
+
+export type GetUsersResponse = {
+  __typename?: "GetUsersResponse";
+  items: Array<User>;
+  paginationToken?: Maybe<Scalars["String"]>;
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   sendFeedback: Feedback;
@@ -52,8 +64,22 @@ export type PaginationInput = {
 export type Query = {
   __typename?: "Query";
   getAllFeedbacks: GetAllFeedbacksResponse;
+  getUsers: GetUsersResponse;
 };
 
 export type QueryGetAllFeedbacksArgs = {
   paginationInput: PaginationInput;
+};
+
+export type QueryGetUsersArgs = {
+  getUsersArgs?: Maybe<GetUsersArgs>;
+};
+
+export type User = {
+  __typename?: "User";
+  id: Scalars["ID"];
+  email: Scalars["String"];
+  enabled: Scalars["Boolean"];
+  verified: Scalars["Boolean"];
+  updatedAt: Scalars["String"];
 };
