@@ -42,13 +42,7 @@ const SignIn: React.FC = () => {
     }
   };
 
-  return (
-    <SignInView
-      error={error}
-      loading={loading}
-      onSignIn={onSignIn}
-    />
-  );
+  return <SignInView error={error} loading={loading} onSignIn={onSignIn} />;
 };
 
 export default SignIn;

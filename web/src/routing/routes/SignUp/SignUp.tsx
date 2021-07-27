@@ -58,12 +58,7 @@ const SignUp: React.FC = () => {
     }
   };
 
-  return (
-    <SignUpView
-      loading={loading}
-      onSignUp={onSignUp}
-    />
-  );
+  return <SignUpView loading={loading} onSignUp={onSignUp} />;
 };
 
 export default SignUp;

@@ -28,13 +28,13 @@ describe("<AdminRoute />", () => {
         <React.Suspense fallback={<LinearProgress />}>
           <MemoryRouter initialEntries={["/test"]}>
             <AdminRoute path="/test">
-              <span>Admin route</span>
+              <span>Feedbacks route</span>
             </AdminRoute>
           </MemoryRouter>
         </React.Suspense>
       </UserContext.Provider>
     );
-    const title = screen.getByText(/Admin route/i);
+    const title = screen.getByText(/Feedbacks route/i);
     expect(title).toBeInTheDocument();
   });
 
@@ -55,7 +55,7 @@ describe("<AdminRoute />", () => {
         <React.Suspense fallback={<LinearProgress />}>
           <MemoryRouter initialEntries={["/test"]}>
             <AdminRoute path="/test">
-              <span>Admin route</span>
+              <span>Feedbacks route</span>
             </AdminRoute>
             <PrivateRoute path={Paths.BASE_LOGGED_IN}>
               <span>Base</span>
@@ -78,7 +78,7 @@ describe("<AdminRoute />", () => {
         }}>
         <MemoryRouter initialEntries={["/test"]}>
           <AdminRoute path="/test">
-            <span>Admin route</span>
+            <span>Feedbacks route</span>
           </AdminRoute>
           <Route path={Paths.SIGN_IN_PATH}>
             <span>Sign in</span>
