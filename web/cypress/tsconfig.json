@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "cypress",
+      "@percy/cypress",
+      "cypress-xpath",
+      "cypress-file-upload",
+      "cypress-localstorage-commands"
+    ],
+    "isolatedModules": false
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["../src", "../node_modules"],
+  "files": ["./support/index.d.ts"]
+}

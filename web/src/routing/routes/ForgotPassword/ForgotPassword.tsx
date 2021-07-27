@@ -37,6 +37,7 @@ const ForgotPassword: React.FC = () => {
         result: AnalyticsEventResult.Success,
       });
       history.push(Paths.CONFIRM_RESET_PASSWORD_PATH);
+      // eslint-disable-next-line no-empty
     } catch (e) {
       recordEvent({
         name: AnalyticsEventName.ForgotPassword,

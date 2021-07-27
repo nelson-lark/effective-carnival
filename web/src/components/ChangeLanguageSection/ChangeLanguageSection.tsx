@@ -46,7 +46,7 @@ const ChangeLanguageSection: React.FC = () => {
         {languages.map((l) => (
           <MenuItem
             key={l.key}
-            data-testid={`change-language-to-${l.key}`}
+            data-testid={`change-language-to-${l.key}-button`}
             onClick={async () => {
               await i18n.changeLanguage(l.key);
               handleMenuClose();

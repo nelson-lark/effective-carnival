@@ -5,11 +5,6 @@ node_modules
 /.pnp
 .pnp.js
 
-# cypress artifacts
-/cypress/code-coverage
-/cypress/screenshots
-/cypress/videos
-
 # production
 /build
 
@@ -30,3 +25,5 @@ yarn-error.log*
 *.iml
 
 .eslintcache
+
+coverage

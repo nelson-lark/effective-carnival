@@ -1,0 +1,10 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+BRANCH=`git rev-parse --abbrev-ref HEAD`
+PROTECTED_BRANCHES="^(master|develop|staging|test)"
+
+if [[ ! "$BRANCH" =~ $PROTECTED_BRANCHES ]]
+then
+  git pull origin develop --no-edit
+fi

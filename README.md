@@ -1,1 +1,1 @@
-# EffectiveCarnival
+# effective-carnival

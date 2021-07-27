@@ -24,6 +24,7 @@ new CloudStack(app, "EffectiveCarnivalStackDevelopment", {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
+  defaultSesSenderEmail: "m.bunkowski@codeandpepper.com",
 });
 
 new CloudStack(app, "EffectiveCarnivalStackTest", {
@@ -33,6 +34,7 @@ new CloudStack(app, "EffectiveCarnivalStackTest", {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
+  defaultSesSenderEmail: "m.bunkowski@codeandpepper.com",
 });
 
 new CloudStack(app, "EffectiveCarnivalStackStaging", {
@@ -42,6 +44,7 @@ new CloudStack(app, "EffectiveCarnivalStackStaging", {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
+  defaultSesSenderEmail: "m.bunkowski@codeandpepper.com",
 });
 
 new CloudStack(app, "EffectiveCarnivalStackProduction", {
@@ -51,4 +54,5 @@ new CloudStack(app, "EffectiveCarnivalStackProduction", {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
+  defaultSesSenderEmail: "m.bunkowski@codeandpepper.com",
 });

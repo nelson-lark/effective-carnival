@@ -1,10 +1,9 @@
 import "@percy/cypress";
-
 import "cypress-file-upload";
-
 import "cypress-xpath";
-
 import "@cypress/code-coverage/support";
+import "./aws-commands";
+import "cypress-localstorage-commands";
 
 import { Credentials } from "./interfaces/Credentials";
 import { commonSelectors } from "./page-objects/selectors/common-selectors";
@@ -29,7 +28,15 @@ Cypress.Commands.add("signOutFromApp", () => {
   cy.checkThatSubpageURLContains("/sign-in");
 });
 
+Cypress.Commands.add("setLanguage", (language: string) => {
+  window.localStorage.setItem("i18nextLng", language);
+});
+
 Cypress.Commands.add("clickOn", (selector: string) => {
+  cy.getByDataTestId(selector).click();
+});
+
+Cypress.Commands.add("checkRadioButton", (selector: string) => {
   cy.getByDataTestId(selector).click();
 });
 
@@ -53,43 +60,4 @@ Cypress.Commands.add("checkThatSubpageURLContains", (specificPage: string) => {
 
 Cypress.Commands.add("getByDataTestId", (selector: string, ...args: any[]) => {
   return cy.get(`[data-testid=${selector}]`, ...args);
-});
-
-Cypress.Commands.add(
-  "getByDataTestIdLike",
-  (selector: string, ...args: any[]) => {
-    return cy.get(`[data-testid*=${selector}]`, ...args);
-  }
-);
-
-Cypress.Commands.add("confirmUserSignUp", (email: string) => {
-  cy.exec(`aws cognito-idp admin-confirm-sign-up \
-  --user-pool-id ${Cypress.env("AWS_COGNITO_USER_POOL_ID")} \
-  --username ${email}`);
-});
-
-Cypress.Commands.add("createNormalUserWithPassword", (email: string) => {
-  cy.exec(`aws cognito-idp admin-create-user \
-  --user-pool-id ${Cypress.env("AWS_COGNITO_USER_POOL_ID")} \
-  --username ${email}`);
-  cy.exec(`aws cognito-idp admin-set-user-password \
-  --user-pool-id ${Cypress.env("AWS_COGNITO_USER_POOL_ID")} \
-  --username ${email} \
-  --password ${Cypress.env("PASSWORD")} \
-  --permanent`);
-});
-
-Cypress.Commands.add(
-  "addNormalUserToSpecificGroup",
-  (email: string, group: string) => {
-    cy.exec(`aws cognito-idp admin-add-user-to-group \
-  --user-pool-id ${Cypress.env("AWS_COGNITO_USER_POOL_ID")} \
-  --username ${email} \
-  --group-name ${group}`);
-  }
-);
-
-Cypress.Commands.add("createAdminUserWithPassword", (email: string) => {
-  cy.createNormalUserWithPassword(email);
-  cy.addNormalUserToSpecificGroup(email, "admin");
 });

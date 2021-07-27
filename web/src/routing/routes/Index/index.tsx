@@ -8,7 +8,7 @@ const Index: React.FC = () => {
   return (
     <PageLayout pb={5}>
       <Helmet>
-        <title>EffectiveCarnival</title>
+        <title>effective-carnival</title>
       </Helmet>
       <Typography variant="h1">Index page</Typography>
     </PageLayout>

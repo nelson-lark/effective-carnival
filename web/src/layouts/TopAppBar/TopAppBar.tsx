@@ -40,7 +40,7 @@ const TopAppBar: React.FC<Props> = ({
           onClick={onMenuButtonClick}>
           <MenuIcon />
         </IconButton>
-        <Logo />
+        <Logo dataTestId="logo-link-in-top-app-bar" />
 
         {user ? (
           <UserProfileMenu onSendFeedbackClick={onSendFeedbackClick} />

@@ -40,7 +40,7 @@ const NavigationDrawer: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation("common");
 
-  const { user } = useUserContext();
+  const { isUserAdmin, user } = useUserContext();
   const classes = useStyles();
 
   return (
@@ -80,7 +80,7 @@ const NavigationDrawer: React.FC<Props> = ({
           </AppBar>
           <Divider />
           <List>
-            {user?.groups.includes("admin") && (
+            {isUserAdmin() && (
               <>
                 <ListItem
                   button

@@ -6,6 +6,7 @@ import AnalyticsEventName from "@enums/AnalyticsEventName";
 
 import { recordEvent } from "@utils/analytics";
 
+import AdminRoute from "./AdminRoute";
 import NonPrivateRoute from "./NonPrivateRoute";
 import PrivateRoute from "./PrivateRoute";
 
@@ -61,7 +62,7 @@ const Routes: React.FC = () => {
       {/* END AUTHORIZED-COMMON */}
 
       {/* START ADMIN */}
-      <PrivateRoute path={Paths.ADMIN_PATH} component={Admin} />
+      <AdminRoute path={Paths.ADMIN_PATH} component={Admin} />
       {/* END ADMIN */}
 
       {/* START HELP/SETTINGS */}

@@ -13,13 +13,15 @@ import AnalyticsEventName from "@enums/AnalyticsEventName";
 
 import { NUMBER_PREFIX_INPUT_KEY } from "@consts/index";
 
+import { useTranslation } from "react-i18next";
+
 import SignUpView from "./SignUpView";
 
 import { SignUpFormState } from "./SignUpView/SignUpForm";
 
 const SignUp: React.FC = () => {
   const history = useHistory();
-
+  const { i18n } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
 
   const onSignUp = async ({ email, password, phone }: SignUpFormState) => {
@@ -36,6 +38,7 @@ const SignUp: React.FC = () => {
         attributes: {
           email: lowerCaseEmail,
           phone_number: removeAllWhitespaces(phone!),
+          locale: i18n.language,
         },
       });
       setLoading(false);
@@ -55,7 +58,12 @@ const SignUp: React.FC = () => {
     }
   };
 
-  return <SignUpView loading={loading} onSignUp={onSignUp} />;
+  return (
+    <SignUpView
+      loading={loading}
+      onSignUp={onSignUp}
+    />
+  );
 };
 
 export default SignUp;

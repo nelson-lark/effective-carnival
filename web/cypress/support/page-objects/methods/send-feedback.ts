@@ -18,6 +18,6 @@ export const sendFeedback = {
     cy.getByDataTestId(sendFeedbackSelectors.sendButton).click();
   },
   typeMessage: (text: string) => {
-    cy.getByDataTestId(sendFeedbackSelectors.textareaContainer).type(text);
+    cy.getByDataTestId(sendFeedbackSelectors.textareaInput).type(text);
   },
 } as const;

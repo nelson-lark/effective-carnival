@@ -8,17 +8,14 @@ import { CognitoMessageTriggerSource } from "@enums/CognitoMessageTriggerSource"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 AWSMock.setSDKInstance(require("aws-sdk"));
-AWSMock.mock("S3", "getObject", () => {
-  return Promise.resolve({
-    Body: Buffer.from("%FRONTEND% %ACTIVATION% %RESETPASSWORD%", "utf8"),
-  });
-});
 
-import {
-  generateCodeLink,
-  generateEmailFromTemplate,
-  handler,
-} from "./authorizationEmailsLambda";
+jest.mock("../../common/emailSending/utils", () => ({
+  generateEmailFromTemplate: jest
+    .fn()
+    .mockResolvedValue("https://codeandpepper.com"),
+}));
+
+import { generateCodeLink, handler } from "./authorizationEmailsLambda";
 
 const basicEvent = {
   callerContext: { awsSdkVersion: "", clientId: "" },
@@ -76,19 +73,6 @@ describe("authorizationEmailsLambda", () => {
     });
   });
 
-  describe("generateEmailFromTemplate()", () => {
-    it("should properly grab and replace values in template", async () => {
-      const finalTemplate = await generateEmailFromTemplate("test", [
-        [/%ACTIVATION%/g, "codeandpepper.activate"],
-        [/%RESETPASSWORD%/g, "codeandpepper.reset"],
-      ]);
-
-      expect(finalTemplate).toContain("https://codeandpepper.com");
-      expect(finalTemplate).toContain("codeandpepper.activate");
-      expect(finalTemplate).toContain("codeandpepper.reset");
-    });
-  });
-
   describe("handler", () => {
     it(`should properly send ${CognitoMessageTriggerSource.ForgotPassword} email`, async () => {
       await LambdaTester(handler)
@@ -97,16 +81,8 @@ describe("authorizationEmailsLambda", () => {
           triggerSource: CognitoMessageTriggerSource.ForgotPassword,
         })
         .expectResult((result: CustomMessageTriggerEvent) => {
-          expect(result.response.emailMessage).toContain(
-            "https://codeandpepper.com"
-          );
-          expect(result.response.emailMessage).toContain("%ACTIVATION%");
-          expect(result.response.emailMessage).toContain(
-            "https://codeandpepper.com/create-new-password?username=test%40test.com&code=123"
-          );
-
           expect(result.response.emailSubject).toEqual(
-            "EffectiveCarnival | Reset password"
+            "Effective carnival | Reset password"
           );
         });
     });
@@ -140,13 +116,8 @@ describe("authorizationEmailsLambda", () => {
             triggerSource: eventName,
           })
           .expectResult((result: CustomMessageTriggerEvent) => {
-            expect(result.response.emailMessage).toContain("%RESETPASSWORD%");
-            expect(result.response.emailMessage).toContain(
-              "https://codeandpepper.com/confirm-signup?username=test%40test.com&code=123"
-            );
-
             expect(result.response.emailSubject).toEqual(
-              "EffectiveCarnival | Verify account"
+              "Effective carnival | Verify account"
             );
           });
       });

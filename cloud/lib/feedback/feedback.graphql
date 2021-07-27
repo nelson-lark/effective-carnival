@@ -6,16 +6,26 @@ type Feedback {
   description: String!
 }
 
+type GetAllFeedbacksResponse {
+  items: [Feedback!]!
+  totalCount: Int!
+}
+
 input FeedbackInput {
   description: String!
 }
 
+input PaginationInput {
+  limit: Int!
+  offset: Int!
+}
+
 extend type Mutation {
-  sendFeedback(feedback: FeedbackInput!): Feedback
+  sendFeedback(feedback: FeedbackInput!): Feedback!
 }
 
 extend type Query {
-  getAllFeedbacks: [Feedback!]! @aws_auth(cognito_groups: ["admin"])
+  getAllFeedbacks(paginationInput: PaginationInput!): GetAllFeedbacksResponse! @aws_auth(cognito_groups: ["admin"])
 }
 
 directive @aws_auth(cognito_groups: [String]) on FIELD_DEFINITION

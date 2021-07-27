@@ -1,7 +1,7 @@
 {
   "version": 2,
   "snapshot": {
-    "widths": [1920, 1280, 768, 360],
+    "widths": [1920, 1280],
     "min-height": 1024
   }
 }

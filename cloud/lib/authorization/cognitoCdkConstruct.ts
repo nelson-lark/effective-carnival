@@ -16,6 +16,8 @@ interface CognitoProps {
   envName: EnvName;
   pinpointArn: string;
   emailTemplatesBucket: s3.Bucket;
+  emailTranslatedTextsBucket: s3.Bucket;
+  defaultSesSenderEmail: string;
 }
 
 export class CognitoCdkConstruct extends cdk.Construct {
@@ -23,7 +25,14 @@ export class CognitoCdkConstruct extends cdk.Construct {
   constructor(
     scope: cdk.Construct,
     id: string,
-    { defaultDomain, envName, pinpointArn, emailTemplatesBucket }: CognitoProps
+    {
+      defaultDomain,
+      envName,
+      pinpointArn,
+      emailTemplatesBucket,
+      emailTranslatedTextsBucket,
+      defaultSesSenderEmail,
+    }: CognitoProps
   ) {
     super(scope, id);
 
@@ -62,12 +71,24 @@ export class CognitoCdkConstruct extends cdk.Construct {
           mutable: true,
           required: false,
         },
+        locale: {
+          mutable: true,
+          required: true,
+        },
       },
       userVerification: {
         emailSubject: "EffectiveCarnival | Verify account",
         emailStyle: cognito.VerificationEmailStyle.CODE,
       },
     });
+
+    const cfnUserPool = this.userPool.node.defaultChild as cognito.CfnUserPool;
+
+    cfnUserPool.emailConfiguration = {
+      emailSendingAccount: "DEVELOPER",
+      sourceArn: `arn:aws:ses:${process.env.CDK_DEFAULT_REGION}:${cdk.Aws.ACCOUNT_ID}:identity/${defaultSesSenderEmail}`,
+      from: `EffectiveCarnival <${defaultSesSenderEmail}>`,
+    };
 
     // Adds 'admin' group
     new cognito.CfnUserPoolGroup(this, `${envName}-AdminUserPoolGroup`, {
@@ -95,6 +116,7 @@ export class CognitoCdkConstruct extends cdk.Construct {
         defaultDomain,
         envName,
         emailTemplatesBucket,
+        emailTranslatedTextsBucket,
       }
     );
 

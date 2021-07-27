@@ -1,0 +1,12 @@
+query getAllFeedbacks($paginationInput: PaginationInput!) {
+  feedbacks: getAllFeedbacks(paginationInput: $paginationInput) {
+    items {
+      PK
+      SK
+      username
+      time
+      description
+    }
+    totalCount
+  }
+}

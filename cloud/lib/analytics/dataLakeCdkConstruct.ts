@@ -28,7 +28,7 @@ export class DataLakeCdkConstruct extends cdk.Construct {
     // Resource: AWS S3
     // ========================================================================
 
-    // Purpose: Data lake e.g. for Pinpint events
+    // Purpose: Data lake e.g. for Pinpoint events
 
     const bucket = new s3.Bucket(this, `${envName}-Bucket`, {
       bucketName: `${envName}-effective-carnival-data-lake-bucket`,

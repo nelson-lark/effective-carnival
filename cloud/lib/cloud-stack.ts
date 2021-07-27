@@ -14,6 +14,7 @@ import { EnvName } from "@enums/EnvName";
 interface SingleEnvironmentProps {
   envName: EnvName;
   repository: GitHubSourceCodeProviderProps;
+  defaultSesSenderEmail: string;
 }
 
 export class CloudStack extends cdk.Stack {
@@ -23,6 +24,7 @@ export class CloudStack extends cdk.Stack {
     {
       envName,
       repository,
+      defaultSesSenderEmail,
       ...stackProps
     }: cdk.StackProps & SingleEnvironmentProps
   ) {
@@ -54,13 +56,12 @@ export class CloudStack extends cdk.Stack {
     );
 
     // Email sending
-    const { emailTemplatesBucket } = new EmailSendingCdkConstruct(
-      this,
-      `${envName}-EmailSending`,
-      {
+    const { emailTemplatesBucket, emailTranslatedTextsBucket } =
+      new EmailSendingCdkConstruct(this, `${envName}-EmailSending`, {
         envName,
-      }
-    );
+        defaultSesSenderEmail,
+        defaultDomain,
+      });
 
     // Whole cognito setup with Pinpoint
     const { userPool } = new CognitoCdkConstruct(
@@ -71,6 +72,8 @@ export class CloudStack extends cdk.Stack {
         envName,
         pinpointArn,
         emailTemplatesBucket,
+        emailTranslatedTextsBucket,
+        defaultSesSenderEmail,
       }
     );
 

@@ -3,6 +3,7 @@ import { S3 } from "aws-sdk";
 import { CustomMessageTriggerHandler } from "aws-lambda";
 
 import { CognitoMessageTriggerSource } from "@enums/CognitoMessageTriggerSource";
+import { generateEmailFromTemplate } from "@common/emailSending/utils";
 
 const s3 = new S3();
 
@@ -36,39 +37,6 @@ export const generateCodeLink = (
   )}&code=${code}`;
 };
 
-/**
- * Helper function, which grabs email template from S3 and supplies data to it
- * @param templateName  - Name of the template in S3
- * @param customReplace - Array of [replaceFrom, replaceTo] tuples
- */
-export const generateEmailFromTemplate = async (
-  templateName: string,
-  customReplace: [RegExp, string][]
-): Promise<string> => {
-  const { bucketName, defaultDomain } = process.env;
-
-  const objectParams = {
-    Bucket: bucketName!,
-    Key: `${templateName}.html`,
-  };
-  console.log(`Trying to grab ${templateName} template`);
-  const emailTemplateRaw = await s3.getObject(objectParams).promise();
-
-  console.log("Replacing values in the template");
-
-  const feLink = `https://${defaultDomain}`;
-
-  let emailContent = emailTemplateRaw
-    .Body!.toString()
-    .replace(/%FRONTEND%/g, feLink);
-
-  for (const [key, value] of customReplace) {
-    emailContent = emailContent.replace(key, value);
-  }
-
-  return emailContent;
-};
-
 export const handler: CustomMessageTriggerHandler = async (
   event,
   context,
@@ -89,7 +57,7 @@ export const handler: CustomMessageTriggerHandler = async (
       const {
         request: {
           codeParameter,
-          userAttributes: { email },
+          userAttributes: { email, locale },
         },
       } = event;
 
@@ -99,25 +67,35 @@ export const handler: CustomMessageTriggerHandler = async (
         codeParameter
       );
 
-      event.response.emailSubject = "EffectiveCarnival | Verify account";
+      event.response.emailSubject = "Effective carnival | Verify account";
       event.response.emailMessage = await generateEmailFromTemplate(
+        s3,
         "emailVerification",
-        [[/%ACTIVATION%/g, activationLink]]
+        [
+          [/%EMAILADDRESS%/, email],
+          [/%ACTIVATION%/g, activationLink],
+        ],
+        locale
       );
     } else if (triggerSource === CognitoMessageTriggerSource.ForgotPassword) {
       const {
         request: {
           codeParameter,
-          userAttributes: { email },
+          userAttributes: { email, locale },
         },
       } = event;
 
       const resetLink = generateCodeLink(triggerSource, email, codeParameter);
 
-      event.response.emailSubject = "EffectiveCarnival | Reset password";
+      event.response.emailSubject = "Effective carnival | Reset password";
       event.response.emailMessage = await generateEmailFromTemplate(
+        s3,
         "resetPassword",
-        [[/%RESETPASSWORD%/g, resetLink]]
+        [
+          [/%EMAILADDRESS%/, email],
+          [/%RESETPASSWORD%/g, resetLink],
+        ],
+        locale
       );
     }
   } catch (e) {

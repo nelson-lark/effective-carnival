@@ -29,16 +29,31 @@ export type FeedbackInput = {
   description: Scalars["String"];
 };
 
+export type GetAllFeedbacksResponse = {
+  __typename?: "GetAllFeedbacksResponse";
+  items: Array<Feedback>;
+  totalCount: Scalars["Int"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
-  sendFeedback?: Maybe<Feedback>;
+  sendFeedback: Feedback;
 };
 
 export type MutationSendFeedbackArgs = {
   feedback: FeedbackInput;
 };
 
+export type PaginationInput = {
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
+};
+
 export type Query = {
   __typename?: "Query";
-  getAllFeedbacks: Array<Feedback>;
+  getAllFeedbacks: GetAllFeedbacksResponse;
+};
+
+export type QueryGetAllFeedbacksArgs = {
+  paginationInput: PaginationInput;
 };

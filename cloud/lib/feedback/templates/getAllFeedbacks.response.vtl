@@ -1,0 +1,10 @@
+#set($map = {
+    "totalCount": $context.result.hits.total.value,
+    "items": []
+})
+
+#foreach($entry in $context.result.hits.hits)
+    $util.quiet($map.items.add($entry.get("_source")))
+#end
+
+$util.toJson($map)

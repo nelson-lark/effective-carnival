@@ -1,22 +1,23 @@
 import {
   createRandomMessage,
   createRandomUser,
-} from "cypress/support/generate-data";
-import { adminPage } from "cypress/support/page-objects/methods/admin-page";
-import { sendFeedback } from "cypress/support/page-objects/methods/send-feedback";
+} from "../../support/generate-data";
+import { adminPage } from "../../support/page-objects/methods/admin-page";
+import { sendFeedback } from "../../support/page-objects/methods/send-feedback";
 import { indexPage } from "../../support/page-objects/methods/index-page";
 
-const normalUser = createRandomUser();
-const adminUser = createRandomUser();
-const normalUserMessage = createRandomMessage();
+const admin = createRandomUser();
+const user = createRandomUser();
+const userMessage = createRandomMessage();
 
 describe("Send feedback test suite", () => {
   before(() => {
+    cy.setLanguage("en");
     cy.visit("/sign-in");
-    cy.createNormalUserWithPassword(normalUser.correctEmail);
+    cy.createUserWithPassword(user.correctEmail);
     cy.loginAs({
-      email: normalUser.correctEmail,
-      password: normalUser.correctPassword,
+      email: user.correctEmail,
+      password: user.correctPassword,
     });
   });
 
@@ -40,20 +41,20 @@ describe("Send feedback test suite", () => {
     indexPage.clickSendFeedbackButton();
     indexPage.checkIfSideMenuIsClosed();
     sendFeedback.modalIsVisible();
-    sendFeedback.typeMessage(normalUserMessage.message);
+    sendFeedback.typeMessage(userMessage.message);
     sendFeedback.clickOnSendButton();
     cy.signOutFromApp();
   });
 
   it("Admin is able to see the new feedback on the list", () => {
-    cy.createAdminUserWithPassword(adminUser.correctEmail);
+    cy.createAdminWithPassword(admin.correctEmail);
     cy.loginAs({
-      email: adminUser.correctEmail,
-      password: adminUser.correctPassword,
+      email: admin.correctEmail,
+      password: admin.correctPassword,
     });
     indexPage.openSideMenu();
     indexPage.clickAdminButton();
     cy.checkThatSubpageURLContains("/admin");
-    adminPage.checkIfUserMessageIsShown(normalUserMessage.message);
+    adminPage.checkIfUserMessageIsShown(userMessage.message);
   });
 });

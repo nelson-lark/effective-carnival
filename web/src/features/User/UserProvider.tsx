@@ -7,11 +7,13 @@ import HubEvent from "@enums/HubEvent";
 import User from "@interfaces/User";
 
 export interface UserContextValue {
+  isUserAdmin(): boolean;
   user?: User | null;
   updateUser(userData: Partial<User>): void;
 }
 
 export const UserContext = React.createContext<UserContextValue>({
+  isUserAdmin: () => false,
   user: undefined,
   updateUser: () => {},
 });
@@ -52,6 +54,11 @@ const UserProvider: React.FC = ({ children }) => {
     []
   );
 
+  const isUserAdmin = useCallback(
+    (): boolean => user?.groups.includes("admin") ?? false,
+    [user]
+  );
+
   useEffect(() => {
     (async () => {
       Hub.listen("auth", async ({ payload: { event } }) => {
@@ -73,7 +80,7 @@ const UserProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, updateUser }}>
+    <UserContext.Provider value={{ isUserAdmin, user, updateUser }}>
       {children}
     </UserContext.Provider>
   );

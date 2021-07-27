@@ -1,11 +1,7 @@
 <mjml>
   <mj-head>
-    <mj-title>EffectiveCarnival | Confirm your registration now</mj-title>
+    <mj-title>${title}</mj-title>
     <mj-style>
-      :root {
-        --mui-blue: #3F51B5;
-      }
-
       body {
         font-family: Roboto,sans-serif;
       }
@@ -22,10 +18,11 @@
       }
 
       .mui-mail div {
-        color: var(--mui-blue) !important;
+        color: #3F51B5 !important;
 
         font-size: 16px !important;
         line-height: 24px !important;
+        text-decoration: none !important;
       }
 
       .mui-text div {
@@ -54,32 +51,32 @@
   <mj-body>
     <mj-section>
       <mj-column>
-        <mj-text css-class="mui-title mui-app-name">{{name}}</mj-text>
+        <mj-text css-class="mui-title mui-app-name">Effective carnival</mj-text>
       </mj-column>
     </mj-section>
     <mj-wrapper css-class="mui-container">
       <mj-section>
         <mj-column>
-          <mj-text css-class="mui-title">Email Verification</mj-text>
+          <mj-text css-class="mui-title">${emailTitle}</mj-text>
 
-          <mj-text css-class="mui-mail">%EMAIL_ADDRESS%</mj-text>
+          <mj-text css-class="mui-mail">%EMAILADDRESS%</mj-text>
 
-          <mj-text css-class="mui-text">We are almost done with setting up your account. Please, confirm your email to continue.</mj-text>
+          <mj-text css-class="mui-text">${emailText1}</mj-text>
 
           <mj-button
-                  css-class="mui-button"
-                  font-size="14px"
-                  line-height="16px"
-                  letter-spacing="1.25px"
-                  text-transform="uppercase"
-                  background-color="var(--mui-blue)"
-                  href="%ACTIVATION%">
-            Confirm email address
+            css-class="mui-button"
+            font-size="14px"
+            line-height="16px"
+            letter-spacing="1.25px"
+            text-transform="uppercase"
+            background-color="#3F51B5"
+            href="%ACTIVATION%">
+            ${button}
           </mj-button>
 
-          <mj-text css-class="mui-text">The link will expire in 24 h.</mj-text>
+          <mj-text css-class="mui-text">${emailText2}</mj-text>
 
-          <mj-text css-class="mui-text">Cheers!</mj-text>
+          <mj-text css-class="mui-text">${emailText3}</mj-text>
         </mj-column>
       </mj-section>
     </mj-wrapper>

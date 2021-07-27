@@ -21,21 +21,13 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": [
-      "node",
-      "cypress",
-      "@percy/cypress",
-      "cypress-xpath",
-      "cypress-file-upload"
+      "node"
     ]
   },
   "include": [
-    "src",
-    "cypress"
+    "src"
   ],
   "exclude": [
     "../node_modules"
-  ],
-  "files": [
-    "cypress/support/index.d.ts"
   ]
 }

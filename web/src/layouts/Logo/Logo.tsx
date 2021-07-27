@@ -4,16 +4,17 @@ import { Link } from "react-router-dom";
 
 import useStyles from "./styles";
 
-const Logo: React.FC = () => {
+interface Props {
+  dataTestId?: string;
+}
+
+const Logo: React.FC<Props> = ({ dataTestId = "logo-link-in-side-menu" }) => {
   const classes = useStyles();
 
   return (
     <Typography variant="h6" className={classes.title}>
-      <Link
-        to="/"
-        data-testid="logo-link-in-side-menu"
-        className={classes.logotype}>
-        EffectiveCarnival
+      <Link to="/" data-testid={dataTestId} className={classes.logotype}>
+        effective-carnival
       </Link>
     </Typography>
   );

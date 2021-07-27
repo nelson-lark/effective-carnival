@@ -32,8 +32,11 @@ export const indexPage = {
       timeout: 500,
     }).should("not.exist");
   },
-  clickLogo: () => {
-    cy.getByDataTestId(indexPageSelectors.logoLinkInSideMenu).last().click();
+  clickLogoInTopAppBar: () => {
+    cy.getByDataTestId(indexPageSelectors.logoLinkInTopAppBar).click();
+  },
+  clickLogoInSideMenu: () => {
+    cy.getByDataTestId(indexPageSelectors.logoLinkInSideMenu).click();
   },
   checkIfUserAvatarIsVisible: () => {
     cy.getByDataTestId(indexPageSelectors.userAvatarButton).should(

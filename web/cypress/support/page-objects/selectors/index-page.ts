@@ -7,6 +7,7 @@ export const indexPageSelectors = {
   sendFeedbackButtonInSideMenu: "send-feedback-button-in-side-menu",
   helpButtonInSideMenu: "help-button-in-side-menu",
   logoLinkInSideMenu: "logo-link-in-side-menu",
+  logoLinkInTopAppBar: "logo-link-in-top-app-bar",
   signInButtonOnAppBar: "sign-in-button-on-app-bar",
   userAvatarButton: "user-avatar-button",
   userEmailInUserMenu: "user-email-in-user-menu",

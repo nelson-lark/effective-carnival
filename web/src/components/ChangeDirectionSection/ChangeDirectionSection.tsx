@@ -34,14 +34,18 @@ const ChangeDirectionSection: React.FC = () => {
           <FormControlLabel
             value="ltr"
             control={
-              <Radio inputProps={{ "data-testid": "radio-ltr" } as never} />
+              <Radio
+                inputProps={{ "data-testid": "ltr-radio-button" } as never}
+              />
             }
             label={t("Left to right")}
           />
           <FormControlLabel
             value="rtl"
             control={
-              <Radio inputProps={{ "data-testid": "radio-rtl" } as never} />
+              <Radio
+                inputProps={{ "data-testid": "rtl-radio-button" } as never}
+              />
             }
             label={t("Right to left")}
           />

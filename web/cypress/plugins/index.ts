@@ -15,6 +15,7 @@ import path from "path";
 
 import dotenvPlugin from "cypress-dotenv";
 
+// @ts-ignore
 import registerCodeCoverageTasks from "@cypress/code-coverage/task";
 
 export default (on: any, config: any): Record<string, string> => {

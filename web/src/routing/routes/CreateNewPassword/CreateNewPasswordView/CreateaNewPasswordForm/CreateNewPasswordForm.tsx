@@ -49,7 +49,8 @@ const CreateNewPasswordForm: React.FC<Props> = ({ onSavePassword }) => {
         error={errors.password?.message}
         label={t("Password")}
         placeholder={t("Password")}
-        autoComplete="current-password"
+        autoComplete="new-password"
+        autoFocus
       />
       <PasswordField
         id="retype-password"
@@ -59,7 +60,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ onSavePassword }) => {
         label={t("Retype Password")}
         placeholder={t("Retype Password")}
         dataTestId="retype-password-input-field"
-        autoComplete="current-password"
+        autoComplete="new-password"
         withIcon={false}
         labelWidth={120}
       />

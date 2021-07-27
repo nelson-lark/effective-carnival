@@ -4,5 +4,4 @@ export const signInPageSelectors = {
   signInButton: "sign-in-button",
   forgotPasswordButton: "forgot-password-button",
   goToSignUpPageButton: "go-to-sign-up-page-button",
-  showPasswordButton: "show-password-button",
 } as const;

@@ -7,10 +7,10 @@ import { Auth } from "aws-amplify";
 
 import { Box, Button, Container, Typography } from "@material-ui/core";
 
+import { DISABLE_RESEND_EMAIL_TIMEOUT_MILLISECONDS } from "@consts/index";
+
 import AnalyticsEventName from "@enums/AnalyticsEventName";
 import AnalyticsEventResult from "@enums/AnalyticsEventResult";
-
-import { DISABLE_RESEND_EMAIL_TIMEOUT_MILLISECONDS } from "@consts/index";
 
 import { recordEvent } from "@utils/analytics";
 

@@ -81,7 +81,11 @@ const SendFeedbackModal: React.FC<Props> = ({
             render={({ field }) => (
               <TextField
                 {...field}
-                data-testid="send-feedback-textarea-container"
+                InputProps={{
+                  inputProps: {
+                    "data-testid": "send-feedback-textarea",
+                  },
+                }}
                 label={t("field:Description")}
                 placeholder={t(
                   "feedback:Describe your issue or share your ideas"

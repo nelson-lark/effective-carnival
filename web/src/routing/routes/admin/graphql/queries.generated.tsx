@@ -4,29 +4,36 @@ import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 const defaultOptions = {};
 export type GetAllFeedbacksQueryVariables = Types.Exact<{
-  [key: string]: never;
+  paginationInput: Types.PaginationInput;
 }>;
 
 export type GetAllFeedbacksQuery = {
   __typename?: "Query";
-  feedbacks: Array<{
-    __typename?: "Feedback";
-    PK: string;
-    SK: string;
-    username: string;
-    time: any;
-    description: string;
-  }>;
+  feedbacks: {
+    __typename?: "GetAllFeedbacksResponse";
+    totalCount: number;
+    items: Array<{
+      __typename?: "Feedback";
+      PK: string;
+      SK: string;
+      username: string;
+      time: any;
+      description: string;
+    }>;
+  };
 };
 
 export const GetAllFeedbacksDocument = gql`
-  query getAllFeedbacks {
-    feedbacks: getAllFeedbacks {
-      PK
-      SK
-      username
-      time
-      description
+  query getAllFeedbacks($paginationInput: PaginationInput!) {
+    feedbacks: getAllFeedbacks(paginationInput: $paginationInput) {
+      items {
+        PK
+        SK
+        username
+        time
+        description
+      }
+      totalCount
     }
   }
 `;
@@ -43,11 +50,12 @@ export const GetAllFeedbacksDocument = gql`
  * @example
  * const { data, loading, error } = useGetAllFeedbacksQuery({
  *   variables: {
+ *      paginationInput: // value for 'paginationInput'
  *   },
  * });
  */
 export function useGetAllFeedbacksQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     GetAllFeedbacksQuery,
     GetAllFeedbacksQueryVariables
   >

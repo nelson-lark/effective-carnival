@@ -9,7 +9,7 @@ export type SendFeedbackMutationVariables = Types.Exact<{
 
 export type SendFeedbackMutation = {
   __typename?: "Mutation";
-  sendFeedback?: Types.Maybe<{ __typename?: "Feedback"; description: string }>;
+  sendFeedback: { __typename?: "Feedback"; description: string };
 };
 
 export const SendFeedbackDocument = gql`
