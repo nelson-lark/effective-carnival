@@ -8,7 +8,7 @@ import PageLayout from "@layouts/PageLayout";
 import FeedbackView from "./FeedbacksView";
 import { useGetAllFeedbacksQuery } from "./graphql/queries.generated";
 
-const Admin: React.FC = () => {
+const Feedbacks: React.FC = () => {
   const { t } = useTranslation("common");
 
   const [page, setPage] = useState<number>(0);
@@ -42,4 +42,4 @@ const Admin: React.FC = () => {
   );
 };
 
-export default Admin;
+export default Feedbacks;

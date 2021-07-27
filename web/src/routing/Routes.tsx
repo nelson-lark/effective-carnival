@@ -12,7 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 
 import Paths from "./paths";
 
-const Admin = lazy(() => import("./routes/Admin"));
+const Feedbacks = lazy(() => import("./routes/admin/Feedbacks"));
 const ConfirmReset = lazy(() => import("./routes/ConfirmReset"));
 const ConfirmSignUp = lazy(() => import("./routes/ConfirmSignUp"));
 const CreateNewPassword = lazy(() => import("./routes/CreateNewPassword"));
@@ -62,7 +62,7 @@ const Routes: React.FC = () => {
       {/* END AUTHORIZED-COMMON */}
 
       {/* START ADMIN */}
-      <AdminRoute path={Paths.ADMIN_PATH} component={Admin} />
+      <AdminRoute path={Paths.ADMIN_PATH} component={Feedbacks} />
       {/* END ADMIN */}
 
       {/* START HELP/SETTINGS */}
