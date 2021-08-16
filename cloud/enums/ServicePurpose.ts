@@ -3,7 +3,8 @@ export enum ServicePurpose {
   ApplicationDeployment = "ApplicationDeployment",
   Authorization = "Authorization",
   DataStore = "DataStore",
-  EmailMessaging = "EmailMessaging",
   Feedback = "Feedback",
   PointOfEntry = "PointOfEntry",
+  NotificationSending = "NotificationSending",
+  UserManagement = "UserManagement",
 }

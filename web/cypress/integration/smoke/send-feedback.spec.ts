@@ -55,6 +55,6 @@ describe("Send feedback test suite", () => {
     indexPage.openSideMenu();
     indexPage.clickAdminButton();
     cy.checkThatSubpageURLContains("/admin");
-    adminPage.checkIfUserMessageIsShown(userMessage.message);
+    adminPage.checkIfMessageIsVisibleInFirstRow(userMessage.message);
   });
 });

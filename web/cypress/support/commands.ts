@@ -1,9 +1,9 @@
 import "@percy/cypress";
-import "cypress-file-upload";
-import "cypress-xpath";
 import "@cypress/code-coverage/support";
-import "./aws-commands";
+import "cypress-file-upload";
 import "cypress-localstorage-commands";
+import "cypress-xpath";
+import "./aws-commands";
 
 import { Credentials } from "./interfaces/Credentials";
 import { commonSelectors } from "./page-objects/selectors/common-selectors";

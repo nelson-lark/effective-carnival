@@ -7,6 +7,7 @@ import * as path from "path";
 import { applyTagsToResource } from "@utils/functions";
 import { EnvName } from "@enums/EnvName";
 import { FeedbackCdkConstruct } from "lib/feedback/feedbackCdkConstruct";
+import { UserCdkConstruct } from "lib/user/userCdkConstruct";
 import { ServicePurpose } from "@enums/ServicePurpose";
 
 interface AppSyncProps {
@@ -59,6 +60,16 @@ export class AppSyncCdkConstruct extends cdk.Construct {
     applyTagsToResource([this.api], {
       envName,
       purpose: ServicePurpose.PointOfEntry,
+    });
+
+    // ========================================================================
+    // Resource: AWS Lambda resolvers
+    // ========================================================================
+
+    new UserCdkConstruct(this, `${envName}-User`, {
+      envName,
+      graphQlApi: this.api,
+      userPoolId: userPool.userPoolId,
     });
 
     // ========================================================================

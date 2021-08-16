@@ -9,7 +9,7 @@ import { CognitoMessageTriggerSource } from "@enums/CognitoMessageTriggerSource"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 AWSMock.setSDKInstance(require("aws-sdk"));
 
-jest.mock("../../common/emailSending/utils", () => ({
+jest.mock("../../common/notificationsSending/utils", () => ({
   generateEmailFromTemplate: jest
     .fn()
     .mockResolvedValue("https://codeandpepper.com"),
