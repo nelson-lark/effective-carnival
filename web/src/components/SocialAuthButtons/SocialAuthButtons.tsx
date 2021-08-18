@@ -28,7 +28,7 @@ const SocialAuthButtons: React.FC<Props> = ({
   return (
     <Box mb={4} mt={2.25}>
       <Box mb={2.5} px={2} boxSizing="border-box">
-        <Typography>{t(title)}</Typography>
+        <Typography align="center">{t(title)}</Typography>
       </Box>
       <Grid justify="center" spacing={2} container>
         <Grid xs={4} item>

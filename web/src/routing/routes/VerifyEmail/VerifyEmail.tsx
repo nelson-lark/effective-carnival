@@ -69,21 +69,22 @@ const VerifyEmail: React.FC = () => {
     }
   }
 
-  if (!state?.email) return <Redirect to="/" />;
+  // if (!state?.email) return <Redirect to="/" />;
 
   return (
     <PageLayout pb={5}>
       <Container maxWidth="xs">
         <Helmet>
-          <title>Verify email</title>
+          <title>{t("Verify email")}</title>
         </Helmet>
         <Box display="flex" flexDirection="column">
           <Typography variant="h4" gutterBottom>
-            Verify your email
+            {t("Verify your email")}
           </Typography>
           <Typography variant="body1">
-            If you have not registered before, we will send you a verification
-            email to the address below.
+            {t(
+              "If you have not registered before, we will send you a verification email to the address below."
+            )}
           </Typography>
 
           <Box pt={1.1} pb={1.3} my={1.5}>
@@ -94,15 +95,15 @@ const VerifyEmail: React.FC = () => {
 
           <Box pb={1.3}>
             <Typography variant="body1">
-              Use sent link to confirm your registration.
+              {t("Use sent link to confirm your registration.")}
             </Typography>
           </Box>
 
           <Box pb={3}>
             <Typography variant="body1">
-              If you do not see an email from us, please check your email
-              address and SPAM folder. You can also resend the verification
-              email.
+              {t(
+                "If you do not see an email from us, please check your email address and SPAM folder."
+              )}
             </Typography>
           </Box>
 
@@ -115,7 +116,7 @@ const VerifyEmail: React.FC = () => {
                 variant="contained"
                 color="primary"
                 fullWidth>
-                Resend email
+                {t("Resend email")}
               </Button>
             </Grid>
             <Grid item xs={12}>
