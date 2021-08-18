@@ -1,12 +1,13 @@
 import React from "react";
-import { Box, Button, CircularProgress, Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
+
+import { Button, CircularProgress, Grid, Typography } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 
 import Paths from "@routing/paths";
 
+import Link from "@components/Link";
 import Form from "@components/Form";
 import EmailInputField from "@components/EmailInputField";
 import PasswordField from "@components/PasswordField";
@@ -62,8 +63,8 @@ const SignInForm: React.FC<Props> = ({ error, loading, onSubmit }) => {
       <Typography color="error" align="center" className={classes.error}>
         {error ? t(`validation:${error}`) : " "}
       </Typography>
-      <Box display="flex" flexDirection="row" alignItems="center" mt={2}>
-        <Box width="50%" position="relative">
+      <Grid container justifyContent="flex-end" spacing={1}>
+        <Grid item xs={12}>
           <Button
             color="primary"
             type="submit"
@@ -76,8 +77,9 @@ const SignInForm: React.FC<Props> = ({ error, loading, onSubmit }) => {
           {loading && (
             <CircularProgress size={20} className={classes.buttonProgress} />
           )}
-        </Box>
-        <Box display="flex" width="50%" justifyContent="flex-end">
+        </Grid>
+
+        <Grid item>
           <Link to={Paths.FORGOT_PASSWORD_PATH}>
             <Button
               color="primary"
@@ -86,8 +88,8 @@ const SignInForm: React.FC<Props> = ({ error, loading, onSubmit }) => {
               {t("Forgot Password?")}
             </Button>
           </Link>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     </Form>
   );
 };

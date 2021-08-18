@@ -22,7 +22,7 @@ interface Props {
 const CreateNewPasswordForm: React.FC<Props> = ({ onSavePassword }) => {
   const history = useHistory();
 
-  const { t } = useTranslation(["auth", "common"]);
+  const { t } = useTranslation(["auth", "common", "field"]);
 
   const {
     control,
@@ -31,13 +31,13 @@ const CreateNewPasswordForm: React.FC<Props> = ({ onSavePassword }) => {
   } = useForm<CreateNewPasswordState>({
     defaultValues: {
       password: "",
-      retypePassword: "",
+      confirmPassword: "",
     },
     resolver: yupResolver(createNewPasswordValidationScheme()),
   });
 
-  const onSubmit = ({ password, retypePassword }: CreateNewPasswordState) => {
-    onSavePassword({ password, retypePassword });
+  const onSubmit = ({ password, confirmPassword }: CreateNewPasswordState) => {
+    onSavePassword({ password, confirmPassword });
   };
 
   return (
@@ -47,21 +47,20 @@ const CreateNewPasswordForm: React.FC<Props> = ({ onSavePassword }) => {
         name="password"
         control={control}
         error={errors.password?.message}
-        label={t("Password")}
-        placeholder={t("Password")}
+        label={t("field:Password")}
+        placeholder={t("field:Password")}
         autoComplete="new-password"
         autoFocus
       />
       <PasswordField
-        id="retype-password"
-        name="retypePassword"
+        id="confirm-password"
+        name="confirmPassword"
         control={control}
-        error={errors.retypePassword?.message}
-        label={t("Retype Password")}
-        placeholder={t("Retype Password")}
-        dataTestId="retype-password-input-field"
+        error={errors.confirmPassword?.message}
+        label={t("field:Confirm Password")}
+        placeholder={t("field:Confirm Password")}
+        dataTestId="confirm-password-input-field"
         autoComplete="new-password"
-        withIcon={false}
         labelWidth={120}
       />
       <Box mt={1.5}>
@@ -80,7 +79,9 @@ const CreateNewPasswordForm: React.FC<Props> = ({ onSavePassword }) => {
             history.push(Paths.SIGN_IN_PATH);
           }}
           data-testid="cancel-new-password-button"
-          variant="text">
+          variant="text"
+          color="primary"
+          fullWidth>
           {t("common:Cancel")}
         </Button>
       </Box>

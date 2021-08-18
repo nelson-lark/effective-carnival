@@ -61,10 +61,17 @@ const FeedbackView: React.FC<Props> = ({
       <TableContainer component={Paper}>
         <Table data-testid="feedback-table" aria-label="Feedback">
           <TableHead data-testid="feedback-table-head">
-            <TableRow>
-              <TableCell align="left">{t("User ID")}</TableCell>
-              <TableCell align="left">{t("Time")}</TableCell>
-              <TableCell align="left" width="50%">
+            <TableRow data-testid="feedback-table-head-row">
+              <TableCell data-testid="user-id-head-cell" align="left">
+                {t("User ID")}
+              </TableCell>
+              <TableCell data-testid="time-head-cell" align="left">
+                {t("Time")}
+              </TableCell>
+              <TableCell
+                data-testid="description-head-cell"
+                align="left"
+                width="50%">
                 {t("field:Description")}
               </TableCell>
             </TableRow>
@@ -74,11 +81,16 @@ const FeedbackView: React.FC<Props> = ({
               <TableRow
                 data-testid="feedback-table-body-row"
                 key={`${feedback.SK}`}>
-                <TableCell align="left">{feedback.username}</TableCell>
-                <TableCell align="left">
+                <TableCell data-testid="user-id-body-cell" align="left">
+                  {feedback.username}
+                </TableCell>
+                <TableCell data-testid="time-body-cell" align="left">
                   {format(parseISO(feedback.time), "yyyy-MM-dd, HH:m:s")}
                 </TableCell>
-                <TableCell component="th" scope="row">
+                <TableCell
+                  data-testid="description-body-cell"
+                  component="th"
+                  scope="row">
                   {feedback.description}
                 </TableCell>
               </TableRow>

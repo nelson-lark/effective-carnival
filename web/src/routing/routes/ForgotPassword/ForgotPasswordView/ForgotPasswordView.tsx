@@ -24,9 +24,8 @@ const ForgotPasswordView: React.FC<OnReset> = ({ onReset, disabled }) => {
           px={2}
           boxSizing="border-box"
           display="flex"
-          flexDirection="column"
-          alignItems="center">
-          <Typography color="textPrimary" gutterBottom variant="h2" paragraph>
+          flexDirection="column">
+          <Typography color="textPrimary" gutterBottom variant="h4">
             {t("Forgot your password?")}
           </Typography>
           <Typography variant="body1">

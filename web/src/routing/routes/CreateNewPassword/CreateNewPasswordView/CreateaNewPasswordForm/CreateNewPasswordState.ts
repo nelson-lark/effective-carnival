@@ -1,6 +1,6 @@
 interface CreateNewPasswordState {
   password: string;
-  retypePassword: string;
+  confirmPassword: string;
 }
 
 export default CreateNewPasswordState;

@@ -24,9 +24,9 @@ const CreateNewPasswordView: React.FC<Props> = ({ onSavePassword }) => {
         <title>{t("Create new password")}</title>
       </Helmet>
       <Container maxWidth="xs">
-        <Box display="flex" flexDirection="column" alignItems="center">
+        <Box display="flex" flexDirection="column">
           <Box px={2}>
-            <Typography variant="h2" gutterBottom paragraph>
+            <Typography variant="h4" gutterBottom paragraph>
               {t("Create new password")}
             </Typography>
             <Typography variant="body1" gutterBottom paragraph>

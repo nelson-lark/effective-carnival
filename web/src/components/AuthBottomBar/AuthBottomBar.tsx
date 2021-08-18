@@ -1,9 +1,10 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { Box, Grid, Typography } from "@material-ui/core";
+
+import Link from "@components/Link";
 
 import Button from "./Button";
 import useStyles from "./styles";

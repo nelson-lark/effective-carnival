@@ -15,20 +15,19 @@ import { SqsEventSource } from "@aws-cdk/aws-lambda-event-sources";
 import * as iam from "@aws-cdk/aws-iam";
 import { DEFAULT_LAMBDA_RUNTIME } from "@consts/index";
 
-interface EmailSendingProps {
+interface NotificationsSendingProps {
   envName: EnvName;
   defaultSesSenderEmail: string;
   defaultDomain: string;
 }
 
-export class EmailSendingCdkConstruct extends cdk.Construct {
-  public readonly emailTemplatesBucket: s3.Bucket;
-  public readonly emailTranslatedTextsBucket: s3.Bucket;
+export class NotificationsSendingCdkConstruct extends cdk.Construct {
+  public readonly notificationTemplatesTranslationsBucket: s3.Bucket;
 
   constructor(
     scope: cdk.Construct,
     id: string,
-    { envName, defaultSesSenderEmail, defaultDomain }: EmailSendingProps
+    { envName, defaultSesSenderEmail, defaultDomain }: NotificationsSendingProps
   ) {
     super(scope, id);
 
@@ -36,23 +35,13 @@ export class EmailSendingCdkConstruct extends cdk.Construct {
     // Resource: AWS S3
     // ========================================================================
 
-    // Purpose: Bucket, where emailTemplates are kept
+    // Purpose: Bucket for notification templates and translations
 
-    this.emailTemplatesBucket = new s3.Bucket(
+    this.notificationTemplatesTranslationsBucket = new s3.Bucket(
       this,
       `${envName}-EmailTemplatesBucket`,
       {
         bucketName: `${envName}-effective-carnival-email-templates`,
-      }
-    );
-
-    // Purpose: Bucket for email translated texts
-
-    this.emailTranslatedTextsBucket = new s3.Bucket(
-      this,
-      `${envName}-EmailTranslatedTextsBucket`,
-      {
-        bucketName: `${envName}-effective-carnival-email-translated-texts`,
       }
     );
 
@@ -62,33 +51,15 @@ export class EmailSendingCdkConstruct extends cdk.Construct {
 
     // Purpose: Deploys email templates to the correct bucket
 
-    const templatesBucketDeployment = new s3deploy.BucketDeployment(
-      this,
-      `${envName}-BucketDeployment`,
-      {
-        destinationBucket: this.emailTemplatesBucket,
+    const notificationTemplatesTranslationsBucketDeployment =
+      new s3deploy.BucketDeployment(this, `${envName}-BucketDeployment`, {
+        destinationBucket: this.notificationTemplatesTranslationsBucket,
         sources: [
           s3deploy.Source.asset(
-            path.join(__dirname, "../../authorization/emailTemplates")
+            path.join(__dirname, "../../authorization/notificationResources")
           ),
         ],
-      }
-    );
-
-    // Purpose: Deploys email translated texts to the correct bucket
-
-    const translatedTextsBucketDeployment = new s3deploy.BucketDeployment(
-      this,
-      `${envName}-TranslatedTextsBucketDeployment`,
-      {
-        destinationBucket: this.emailTranslatedTextsBucket,
-        sources: [
-          s3deploy.Source.asset(
-            path.join(__dirname, "../../authorization/emailTranslatedTexts")
-          ),
-        ],
-      }
-    );
+      });
 
     // ========================================================================
     // Resource: AWS SQS
@@ -111,6 +82,30 @@ export class EmailSendingCdkConstruct extends cdk.Construct {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
+    // Purpose: Hold unsuccessful send text messages
+    const sendTextMessageDeadLetterQueue = new sqs.Queue(
+      this,
+      `${envName}-SendTextMessageDeadLetterQueue`,
+      {
+        queueName: `${envName}-SendTextMessageDeadLetterQueue`,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      }
+    );
+
+    // Purpose: Queue for sending text messages not related to authorization
+    const sendTextMessageQueue = new sqs.Queue(
+      this,
+      `${envName}-SendTextMessageQueue`,
+      {
+        queueName: `${envName}-SendTextMessageQueue`,
+        deadLetterQueue: {
+          maxReceiveCount: 1,
+          queue: sendTextMessageDeadLetterQueue,
+        },
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      }
+    );
+
     // ========================================================================
     // Resource: AWS Lambda
     // ========================================================================
@@ -123,26 +118,20 @@ export class EmailSendingCdkConstruct extends cdk.Construct {
       {
         entry: path.join(__dirname, "./sendEmailLambda.ts"),
         environment: {
-          emailTemplatesBucketName: this.emailTemplatesBucket.bucketName,
-          emailTranslatedTextsBucketName:
-            this.emailTranslatedTextsBucket.bucketName,
+          notificationTemplatesTranslationsBucketName:
+            this.notificationTemplatesTranslationsBucket.bucketName,
           defaultSesSenderEmail: defaultSesSenderEmail,
           defaultDomain: defaultDomain,
         },
         functionName: `${envName}-SendEmailLambda`,
         initialPolicy: [
           new iam.PolicyStatement({
-            actions: ["s3:GetObject"],
+            actions: ["s3:ListBucket", "s3:GetObject"],
             effect: iam.Effect.ALLOW,
             resources: [
-              `${this.emailTemplatesBucket.bucketArn}/*`,
-              `${this.emailTranslatedTextsBucket.bucketArn}/*`,
+              `${this.notificationTemplatesTranslationsBucket.bucketArn}`,
+              `${this.notificationTemplatesTranslationsBucket.bucketArn}/*`,
             ],
-          }),
-          new iam.PolicyStatement({
-            actions: ["s3:ListBucket"],
-            effect: iam.Effect.ALLOW,
-            resources: [`${this.emailTranslatedTextsBucket.bucketArn}`],
           }),
           new iam.PolicyStatement({
             actions: ["ses:SendEmail", "ses:SendRawEmail"],
@@ -159,18 +148,54 @@ export class EmailSendingCdkConstruct extends cdk.Construct {
       new SqsEventSource(sendEmailQueue, { batchSize: 1 })
     );
 
+    // Purpose: Handle text message sending
+
+    const sendTextMessageLambda = new NodejsFunction(
+      this,
+      `${envName}-sendTextMessageLambda`,
+      {
+        entry: path.join(__dirname, "./sendTextMessageLambda.ts"),
+        environment: {
+          notificationTemplatesTranslationsBucketName:
+            this.notificationTemplatesTranslationsBucket.bucketName,
+        },
+        functionName: `${envName}-SendTextMessageLambda`,
+        initialPolicy: [
+          new iam.PolicyStatement({
+            actions: ["s3:ListBucket", "s3:GetObject"],
+            effect: iam.Effect.ALLOW,
+            resources: [
+              `${this.notificationTemplatesTranslationsBucket.bucketArn}`,
+              `${this.notificationTemplatesTranslationsBucket.bucketArn}/*`,
+            ],
+          }),
+          new iam.PolicyStatement({
+            actions: ["sns:Publish"],
+            effect: iam.Effect.ALLOW,
+            resources: ["*"],
+          }),
+        ],
+        handler: "handler",
+        runtime: DEFAULT_LAMBDA_RUNTIME,
+      }
+    );
+
+    sendTextMessageLambda.addEventSource(
+      new SqsEventSource(sendTextMessageQueue, { batchSize: 1 })
+    );
+
     applyTagsToResource(
       [
-        templatesBucketDeployment,
-        translatedTextsBucketDeployment,
-        this.emailTemplatesBucket,
-        this.emailTranslatedTextsBucket,
+        notificationTemplatesTranslationsBucketDeployment,
+        this.notificationTemplatesTranslationsBucket,
         sendEmailQueue,
         sendEmailLambda,
+        sendTextMessageQueue,
+        sendTextMessageLambda,
       ],
       {
         envName,
-        purpose: ServicePurpose.EmailMessaging,
+        purpose: ServicePurpose.NotificationSending,
       }
     );
   }

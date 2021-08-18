@@ -1,7 +1,7 @@
 {
   "Description": "Opis",
   "Password": "Hasło",
-  "Retype Password": "Powtórz hasło",
+  "Confirm Password": "Powtórz hasło",
   "Your password": "Twoje hasło",
   "Mobile phone": "Telefon komórkowy",
   "Phone number": "Numer telefonu",

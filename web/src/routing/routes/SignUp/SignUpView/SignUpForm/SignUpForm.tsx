@@ -1,16 +1,8 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Link,
-  Typography,
-} from "@material-ui/core";
+import { Box, Button, CircularProgress } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
-
-import { PRIVACY_POLICY_LINK, TERMS_OF_USE_LINK } from "@consts/index";
 
 import Form from "@components/Form";
 import EmailInputField from "@components/EmailInputField";
@@ -84,32 +76,18 @@ const SignUpForm: React.FC<Props> = ({ loading, onSubmit }) => {
         validation={["(?=.*[a-z])", "(?=.*[A-Z])", "(?=.*[0-9])", "(?=.{10,})"]}
       />
       <Box display="flex" flexDirection="row" alignItems="center" mt={2}>
-        <Box mr={2} position="relative">
-          <Button
-            color="primary"
-            type="submit"
-            data-testid="sign-up-button"
-            variant="contained"
-            disabled={loading}>
-            {t("Sign up")}
-          </Button>
-          {loading && (
-            <CircularProgress size={20} className={classes.buttonProgress} />
-          )}
-        </Box>
-        <Box>
-          <Typography variant="body2">
-            {t("By signing up, you’re agree to our")}{" "}
-            <Link color="primary" href={TERMS_OF_USE_LINK}>
-              {t("Terms of Use")}
-            </Link>{" "}
-            {t("common:and")}{" "}
-            <Link color="primary" href={PRIVACY_POLICY_LINK}>
-              {t("Privacy Policy")}
-            </Link>
-            .
-          </Typography>
-        </Box>
+        <Button
+          color="primary"
+          type="submit"
+          data-testid="sign-up-button"
+          variant="contained"
+          disabled={loading}
+          fullWidth>
+          {t("Sign up")}
+        </Button>
+        {loading && (
+          <CircularProgress size={20} className={classes.buttonProgress} />
+        )}
       </Box>
     </Form>
   );

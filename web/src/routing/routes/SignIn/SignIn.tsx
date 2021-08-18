@@ -2,12 +2,14 @@ import React, { useState } from "react";
 
 import { Auth } from "aws-amplify";
 
+import getSocialProviderByPlatform from "@utils/getSocialProviderByPlatform";
 import removeAllWhitespaces from "@utils/removeAllWhitespaces";
 
 import { recordEvent } from "@utils/analytics";
 
 import AnalyticsEventName from "@enums/AnalyticsEventName";
 import AnalyticsEventResult from "@enums/AnalyticsEventResult";
+import SocialPlatform from "@enums/SocialPlatform";
 
 import SignInView from "./SignInView";
 
@@ -42,7 +44,23 @@ const SignIn: React.FC = () => {
     }
   };
 
-  return <SignInView error={error} loading={loading} onSignIn={onSignIn} />;
+  const onSocialSignIn = async (socialPlatform: SocialPlatform) => {
+    try {
+      await Auth.federatedSignIn({
+        provider: getSocialProviderByPlatform(socialPlatform),
+      });
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+  return (
+    <SignInView
+      error={error}
+      loading={loading}
+      onSignIn={onSignIn}
+      onSocialSignIn={onSocialSignIn}
+    />
+  );
 };
 
 export default SignIn;

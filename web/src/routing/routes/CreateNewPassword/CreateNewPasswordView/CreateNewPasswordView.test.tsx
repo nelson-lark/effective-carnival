@@ -36,7 +36,7 @@ describe("<CreateNewPassword />", () => {
     const cancelButton = screen.getByText(/Cancel/i);
     expect(cancelButton).toBeInTheDocument();
     const image = document.getElementsByTagName("svg");
-    expect(image).toHaveLength(3);
+    expect(image).toHaveLength(4);
     const passwordInputs = screen.getAllByPlaceholderText(/password/i);
     expect(passwordInputs).toHaveLength(2);
   });

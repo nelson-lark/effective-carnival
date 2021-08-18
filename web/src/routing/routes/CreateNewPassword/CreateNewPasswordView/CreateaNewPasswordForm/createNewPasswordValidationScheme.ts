@@ -9,7 +9,7 @@ import CreateNewPasswordState from "./CreateNewPasswordState";
 export default (): SchemaOf<CreateNewPasswordState> =>
   <SchemaOf<CreateNewPasswordState>>object({
     password: passwordValidation(),
-    retypePassword: string()
+    confirmPassword: string()
       .required(i18n.t("validation:is a required field", { field: "Password" }))
       .oneOf(
         [ref("password"), null],

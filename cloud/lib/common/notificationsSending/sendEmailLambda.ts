@@ -2,7 +2,7 @@ import { SQSHandler } from "aws-lambda";
 import { S3, SES } from "aws-sdk";
 
 import SendEmailSQSEvent from "./interfaces/SendEmailSQSEvent";
-import { generateEmailFromTemplate } from "@common/emailSending/utils";
+import { generateEmailFromTemplate } from "@common/notificationsSending/utils";
 
 import nodemailer from "nodemailer";
 

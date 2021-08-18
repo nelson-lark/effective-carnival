@@ -3,7 +3,7 @@ import { S3 } from "aws-sdk";
 import { CustomMessageTriggerHandler } from "aws-lambda";
 
 import { CognitoMessageTriggerSource } from "@enums/CognitoMessageTriggerSource";
-import { generateEmailFromTemplate } from "@common/emailSending/utils";
+import { generateEmailFromTemplate } from "@common/notificationsSending/utils";
 
 const s3 = new S3();
 

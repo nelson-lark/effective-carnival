@@ -18,8 +18,7 @@ import { ServicePurpose } from "@enums/ServicePurpose";
 interface EmailTemplatesProps {
   defaultDomain: string;
   envName: EnvName;
-  emailTemplatesBucket: s3.Bucket;
-  emailTranslatedTextsBucket: s3.Bucket;
+  notificationTemplatesTranslationsBucket: s3.Bucket;
 }
 
 export class AuthorizationEmailsCdkConstruct extends cdk.Construct {
@@ -31,8 +30,7 @@ export class AuthorizationEmailsCdkConstruct extends cdk.Construct {
     {
       defaultDomain,
       envName,
-      emailTemplatesBucket,
-      emailTranslatedTextsBucket,
+      notificationTemplatesTranslationsBucket,
     }: EmailTemplatesProps
   ) {
     super(scope, id);
@@ -49,24 +47,19 @@ export class AuthorizationEmailsCdkConstruct extends cdk.Construct {
       {
         entry: path.join(__dirname, "./authorizationEmailsLambda.ts"),
         environment: {
-          emailTemplatesBucketName: emailTemplatesBucket.bucketName,
-          emailTranslatedTextsBucketName: emailTranslatedTextsBucket.bucketName,
+          notificationTemplatesTranslationsBucketName:
+            notificationTemplatesTranslationsBucket.bucketName,
           defaultDomain,
         },
         handler: "customMessageTriggerHandler",
         initialPolicy: [
           new iam.PolicyStatement({
-            actions: ["s3:GetObject"],
+            actions: ["s3:ListBucket", "s3:GetObject"],
             effect: iam.Effect.ALLOW,
             resources: [
-              `${emailTemplatesBucket.bucketArn}/*`,
-              `${emailTranslatedTextsBucket.bucketArn}/*`,
+              `${notificationTemplatesTranslationsBucket.bucketArn}`,
+              `${notificationTemplatesTranslationsBucket.bucketArn}/*`,
             ],
-          }),
-          new iam.PolicyStatement({
-            actions: ["s3:ListBucket"],
-            effect: iam.Effect.ALLOW,
-            resources: [`${emailTranslatedTextsBucket.bucketArn}`],
           }),
         ],
         runtime: DEFAULT_LAMBDA_RUNTIME,

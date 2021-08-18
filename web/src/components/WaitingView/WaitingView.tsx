@@ -20,6 +20,7 @@ const WaitingView: React.FC<Props> = ({
   content,
   warning,
   progress,
+  children,
 }) => (
   <Container maxWidth="xs">
     <Box display="flex" flexDirection="column" alignItems="center">
@@ -31,7 +32,7 @@ const WaitingView: React.FC<Props> = ({
         )}
         {progress && <CircularProgress />}
       </Box>
-      <Typography variant="h3" align="center" gutterBottom>
+      <Typography variant="h4" align="center" gutterBottom>
         {title}
       </Typography>
       {content && (
@@ -39,6 +40,7 @@ const WaitingView: React.FC<Props> = ({
           {content}
         </Typography>
       )}
+      {children}
     </Box>
   </Container>
 );

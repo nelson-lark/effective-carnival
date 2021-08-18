@@ -11,12 +11,14 @@ import { applyTagsToResource } from "@utils/functions";
 import { EnvName } from "@enums/EnvName";
 import { ServicePurpose } from "@enums/ServicePurpose";
 
+import { Parameters } from "@interfaces/Parameters";
+
 interface CognitoProps {
   defaultDomain: string;
   envName: EnvName;
   pinpointArn: string;
-  emailTemplatesBucket: s3.Bucket;
-  emailTranslatedTextsBucket: s3.Bucket;
+  parameters: Parameters;
+  notificationTemplatesTranslationsBucket: s3.Bucket;
   defaultSesSenderEmail: string;
 }
 
@@ -29,8 +31,17 @@ export class CognitoCdkConstruct extends cdk.Construct {
       defaultDomain,
       envName,
       pinpointArn,
-      emailTemplatesBucket,
-      emailTranslatedTextsBucket,
+      parameters: {
+        appleClientId,
+        appleTeamId,
+        appleKeyId,
+        applePrivateKey,
+        facebookClientId,
+        facebookSecret,
+        googleClientId,
+        googleSecret,
+      },
+      notificationTemplatesTranslationsBucket,
       defaultSesSenderEmail,
     }: CognitoProps
   ) {
@@ -115,8 +126,7 @@ export class CognitoCdkConstruct extends cdk.Construct {
       {
         defaultDomain,
         envName,
-        emailTemplatesBucket,
-        emailTranslatedTextsBucket,
+        notificationTemplatesTranslationsBucket,
       }
     );
 
@@ -124,6 +134,64 @@ export class CognitoCdkConstruct extends cdk.Construct {
       cognito.UserPoolOperation.CUSTOM_MESSAGE,
       messageFunction
     );
+
+    // Facebook Identity provider - enables login via FB
+
+    const cognitoUserPoolIdentityFacebookProvider =
+      new cognito.UserPoolIdentityProviderFacebook(
+        this,
+        `${envName}-CognitoFacebookProvider`,
+        {
+          clientId: facebookClientId.stringValue,
+          clientSecret: facebookSecret.stringValue,
+          scopes: ["public_profile", "email"],
+          userPool: this.userPool,
+          attributeMapping: {
+            email: cognito.ProviderAttribute.FACEBOOK_EMAIL,
+          },
+        }
+      );
+
+    // Google Identity provider - enables login via Google
+
+    const cognitoUserPoolIdentityGoogleProvider =
+      new cognito.UserPoolIdentityProviderGoogle(
+        this,
+        `${envName}-CognitoGoogleProvider`,
+        {
+          clientId: googleClientId.stringValue,
+          clientSecret: googleSecret.stringValue,
+          scopes: [
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/userinfo.profile",
+            "openid",
+          ],
+          userPool: this.userPool,
+          attributeMapping: {
+            email: cognito.ProviderAttribute.GOOGLE_EMAIL,
+            phoneNumber: cognito.ProviderAttribute.GOOGLE_PHONE_NUMBERS,
+          },
+        }
+      );
+
+    // Apple Identity provider - enable SingInWithApple
+
+    const cognitoUserPoolIdentityAppleProvider =
+      new cognito.UserPoolIdentityProviderApple(
+        this,
+        `${envName}-CognitoAppleProvider`,
+        {
+          clientId: appleClientId.stringValue,
+          teamId: appleTeamId.stringValue,
+          keyId: appleKeyId.stringValue,
+          privateKey: applePrivateKey.stringValue,
+          scopes: ["email", "name"],
+          userPool: this.userPool,
+          attributeMapping: {
+            email: cognito.ProviderAttribute.APPLE_EMAIL,
+          },
+        }
+      );
 
     // UserPoolClient - user pool for application
 
@@ -154,6 +222,9 @@ export class CognitoCdkConstruct extends cdk.Construct {
         },
         supportedIdentityProviders: [
           cognito.UserPoolClientIdentityProvider.COGNITO,
+          cognito.UserPoolClientIdentityProvider.APPLE,
+          cognito.UserPoolClientIdentityProvider.GOOGLE,
+          cognito.UserPoolClientIdentityProvider.FACEBOOK,
         ],
         preventUserExistenceErrors: true,
         userPool: this.userPool,
@@ -161,6 +232,12 @@ export class CognitoCdkConstruct extends cdk.Construct {
     );
 
     cognitoUserPoolClient.node.addDependency(this.userPool);
+
+    cognitoUserPoolClient.node.addDependency(
+      cognitoUserPoolIdentityAppleProvider,
+      cognitoUserPoolIdentityGoogleProvider,
+      cognitoUserPoolIdentityFacebookProvider
+    );
 
     const cognitoIdentityPool = new cognito.CfnIdentityPool(
       this,
@@ -274,7 +351,9 @@ export class CognitoCdkConstruct extends cdk.Construct {
         cognitoPoolRoleAttachment,
         cognitoUserPoolClient,
         cognitoUserPoolDomain,
-
+        cognitoUserPoolIdentityAppleProvider,
+        cognitoUserPoolIdentityGoogleProvider,
+        cognitoUserPoolIdentityFacebookProvider,
         policyForUnauthorizedCognitoUser,
         this.userPool,
         unauthorizedCognitoUserRole,

@@ -62,7 +62,9 @@ const ForgotPasswordForm: React.FC<Props> = ({ onReset, disabled }) => {
             onClick={() => {
               history.push(Paths.SIGN_IN_PATH);
             }}
-            variant="text">
+            variant="text"
+            color="primary"
+            fullWidth>
             {t("Back to sign in page")}
           </Button>
         </Box>
