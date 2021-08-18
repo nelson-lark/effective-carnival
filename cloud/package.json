@@ -13,7 +13,7 @@
     "destroy": "ts-node ./scripts/destroyStack.ts",
     "deploy": "./scripts/buildStack.bash",
     "env:ps": "./scripts/setEnvs.ps1",
-    "env:sh": "./scripts/setEnvs.sh",
+    "env:sh": "./scripts/setEnvs.bash",
     "format": "prettier --write '**/*.ts'",
     "lint": "eslint --ext .ts ./ --color",
     "perm": "chmod +x ./scripts/*",

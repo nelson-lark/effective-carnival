@@ -31,7 +31,6 @@ const UserProvider: React.FC = ({ children }) => {
           phone_number_verified: phoneNumberVerified,
           sub,
           "cognito:groups": groups,
-          identities,
         },
       } = (await Auth.currentSession()).getIdToken();
       setUser({
@@ -41,7 +40,6 @@ const UserProvider: React.FC = ({ children }) => {
         phoneNumberVerified,
         sub,
         groups: groups || [],
-        providerName: identities?.[0]?.providerName,
       });
     } catch (e) {
       setUser(null);

@@ -5,13 +5,11 @@ import { useHistory } from "react-router-dom";
 
 import Paths from "@routing/paths";
 
-import getSocialProviderByPlatform from "@utils/getSocialProviderByPlatform";
 import removeAllWhitespaces from "@utils/removeAllWhitespaces";
 
 import { recordEvent } from "@utils/analytics";
 
 import AnalyticsEventName from "@enums/AnalyticsEventName";
-import SocialPlatform from "@enums/SocialPlatform";
 
 import { NUMBER_PREFIX_INPUT_KEY } from "@consts/index";
 
@@ -60,27 +58,7 @@ const SignUp: React.FC = () => {
     }
   };
 
-  const onSocialSignUp = async (socialPlatform: SocialPlatform) => {
-    try {
-      await Auth.federatedSignIn({
-        provider: getSocialProviderByPlatform(socialPlatform),
-      });
-      recordEvent({
-        name: AnalyticsEventName.SignUp,
-        method: "social",
-        platform: socialPlatform,
-      });
-    } catch (e) {
-      setLoading(false);
-    }
-  };
-  return (
-    <SignUpView
-      loading={loading}
-      onSignUp={onSignUp}
-      onSocialSignUp={onSocialSignUp}
-    />
-  );
+  return <SignUpView loading={loading} onSignUp={onSignUp} />;
 };
 
 export default SignUp;

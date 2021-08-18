@@ -12,12 +12,9 @@ import { applyTagsToResource, getStackNameByEnvName } from "@utils/functions";
 import { EnvName } from "@enums/EnvName";
 import { ServicePurpose } from "@enums/ServicePurpose";
 
-import { Parameters } from "@interfaces/Parameters";
-
 interface AmplifyProps {
   envName: EnvName;
   repository: amplify.GitHubSourceCodeProviderProps;
-  parameters: Parameters;
 }
 
 const { CDK_DEFAULT_ACCOUNT, CDK_DEFAULT_REGION } = process.env;
@@ -30,20 +27,7 @@ export class AmplifyCdkConstruct extends cdk.Construct {
   constructor(
     scope: cdk.Construct,
     id: string,
-    {
-      envName,
-      repository,
-      parameters: {
-        appleClientId,
-        appleTeamId,
-        appleKeyId,
-        applePrivateKey,
-        facebookClientId,
-        facebookSecret,
-        googleClientId,
-        googleSecret,
-      },
-    }: AmplifyProps
+    { envName, repository }: AmplifyProps
   ) {
     super(scope, id);
 
@@ -89,20 +73,6 @@ export class AmplifyCdkConstruct extends cdk.Construct {
             ],
             effect: iam.Effect.ALLOW,
             resources: ["*"],
-          }),
-          new iam.PolicyStatement({
-            actions: ["ssm:GetParameters"],
-            effect: iam.Effect.ALLOW,
-            resources: [
-              appleClientId.parameterArn,
-              appleTeamId.parameterArn,
-              appleKeyId.parameterArn,
-              applePrivateKey.parameterArn,
-              facebookClientId.parameterArn,
-              facebookSecret.parameterArn,
-              googleClientId.parameterArn,
-              googleSecret.parameterArn,
-            ],
           }),
           new iam.PolicyStatement({
             actions: ["amplify:ListTagsForResource", "amplify:TagResource"],

@@ -8,11 +8,8 @@ import { CognitoCdkConstruct } from "@authorization/cognitoCdkConstruct";
 import { AmplifyCdkConstruct } from "@common/amplifyCdkConstruct";
 import { AppSyncCdkConstruct } from "@common/appSyncCdkConstruct";
 import { NotificationsSendingCdkConstruct } from "@common/notificationsSending/notificationsSendingCdkConstruct";
-import { getParameterFromParameterStore } from "@utils/functions";
 
 import { EnvName } from "@enums/EnvName";
-
-import { Parameters } from "@interfaces/Parameters";
 
 interface SingleEnvironmentProps {
   envName: EnvName;
@@ -33,50 +30,6 @@ export class CloudStack extends cdk.Stack {
   ) {
     super(scope, id, stackProps);
 
-    // Grab needed parameters from SSM
-    const parameters: Parameters = {
-      appleClientId: getParameterFromParameterStore(
-        this,
-        envName,
-        "/apple/oauth/client_id"
-      ),
-      appleTeamId: getParameterFromParameterStore(
-        this,
-        envName,
-        "/apple/oauth/team_id"
-      ),
-      appleKeyId: getParameterFromParameterStore(
-        this,
-        envName,
-        "/apple/oauth/key_id"
-      ),
-      applePrivateKey: getParameterFromParameterStore(
-        this,
-        envName,
-        "/apple/oauth/private_key"
-      ),
-      facebookClientId: getParameterFromParameterStore(
-        this,
-        envName,
-        "/facebook/oauth/client_id"
-      ),
-      facebookSecret: getParameterFromParameterStore(
-        this,
-        envName,
-        "/facebook/oauth/secret"
-      ),
-      googleClientId: getParameterFromParameterStore(
-        this,
-        envName,
-        "/google/oauth/client_id"
-      ),
-      googleSecret: getParameterFromParameterStore(
-        this,
-        envName,
-        "/google/oauth/secret"
-      ),
-    };
-
     // Create Amplify application
     const { defaultDomain, policyForAmplifyCiCd } = new AmplifyCdkConstruct(
       this,
@@ -84,7 +37,6 @@ export class CloudStack extends cdk.Stack {
       {
         envName,
         repository,
-        parameters,
       }
     );
 
@@ -121,7 +73,6 @@ export class CloudStack extends cdk.Stack {
         pinpointArn,
         notificationTemplatesTranslationsBucket,
         defaultSesSenderEmail,
-        parameters,
       }
     );
 

@@ -69,7 +69,7 @@ const VerifyEmail: React.FC = () => {
     }
   }
 
-  // if (!state?.email) return <Redirect to="/" />;
+  if (!state?.email) return <Redirect to="/" />;
 
   return (
     <PageLayout pb={5}>

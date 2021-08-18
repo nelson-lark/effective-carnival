@@ -11,8 +11,6 @@ import defaultTheme from "@themes/defaultTheme";
 
 import Paths from "@routing/paths";
 
-import AnalyticsEventName from "@enums/AnalyticsEventName";
-import SocialPlatform from "@enums/SocialPlatform";
 import SignUp from "./SignUp";
 
 const setup = (history?: MemoryHistory): void => {
@@ -180,51 +178,5 @@ describe("<SignUp />", () => {
     });
 
     expect(Auth.signUp).toBeCalledTimes(1);
-  });
-
-  Object.values(SocialPlatform).forEach((socialPlatform) => {
-    it(`should record ${socialPlatform} social login`, async () => {
-      Auth.federatedSignIn = jest.fn();
-
-      setup();
-
-      const socialLogin = await screen.findByLabelText(
-        `Sign up with ${socialPlatform}`
-      );
-
-      expect(socialLogin).toBeInTheDocument();
-
-      await act(async () => {
-        fireEvent.click(socialLogin);
-      });
-
-      expect(Analytics.record).toBeCalledWith({
-        name: AnalyticsEventName.SignUp,
-        attributes: {
-          method: "social",
-          platform: socialPlatform,
-        },
-      });
-    });
-  });
-
-  it(`should record Google social login failure`, async () => {
-    Auth.federatedSignIn = jest.fn().mockImplementation(() => {
-      throw new Error("");
-    });
-
-    setup();
-
-    const googleSocialLogin = await screen.findByLabelText(
-      /Sign up with Google/i
-    );
-
-    expect(googleSocialLogin).toBeInTheDocument();
-
-    await act(async () => {
-      fireEvent.click(googleSocialLogin);
-    });
-
-    expect(Auth.federatedSignIn).toBeCalled();
   });
 });

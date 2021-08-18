@@ -4,22 +4,19 @@ import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
 import Paths from "@routing/paths";
-import SocialPlatform from "@enums/SocialPlatform";
 
 import PageLayout from "@layouts/PageLayout";
 
 import AuthBottomBar from "@components/AuthBottomBar";
-import SocialAuthButtons from "@components/SocialAuthButtons";
 
 import SignUpForm, { SignUpFormState } from "./SignUpForm";
 
 interface Props {
   loading: boolean;
   onSignUp(formData: SignUpFormState): void;
-  onSocialSignUp(platform: SocialPlatform): void;
 }
 
-const SignUpView: React.FC<Props> = ({ loading, onSignUp, onSocialSignUp }) => {
+const SignUpView: React.FC<Props> = ({ loading, onSignUp }) => {
   const { t } = useTranslation("auth");
 
   return (
@@ -34,7 +31,6 @@ const SignUpView: React.FC<Props> = ({ loading, onSignUp, onSocialSignUp }) => {
           </Typography>
         </Box>
         <SignUpForm loading={loading} onSubmit={onSignUp} />
-        <SocialAuthButtons onSocialClick={onSocialSignUp} />
       </Container>
       <AuthBottomBar
         text="Already have an account?"
