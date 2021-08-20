@@ -13,6 +13,7 @@ interface Props {
   content?: string;
   warning?: boolean;
   progress?: boolean;
+  withIcon?: boolean;
 }
 
 const WaitingView: React.FC<Props> = ({
@@ -20,29 +21,39 @@ const WaitingView: React.FC<Props> = ({
   content,
   warning,
   progress,
+  withIcon,
   children,
-}) => (
-  <Container maxWidth="xs">
-    <Box display="flex" flexDirection="column" alignItems="center">
-      <Box mt={1} position="relative">
-        {warning ? (
-          <ErrorOutline data-testid="triangleIcon" />
-        ) : (
-          <CheckCircle data-testid="circleIcon" />
-        )}
-        {progress && <CircularProgress />}
-      </Box>
-      <Typography variant="h4" align="center" gutterBottom>
-        {title}
-      </Typography>
-      {content && (
-        <Typography variant="body1" align="center">
-          {content}
+}) => {
+  let icon = null;
+
+  if (withIcon) {
+    icon = warning ? (
+      <ErrorOutline data-testid="triangleIcon" />
+    ) : (
+      <CheckCircle data-testid="circleIcon" />
+    );
+  }
+
+  return (
+    <Container maxWidth="xs">
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <Box mt={1} position="relative">
+          {icon}
+          {progress && <CircularProgress />}
+        </Box>
+
+        <Typography variant="h4" align="center" gutterBottom>
+          {title}
         </Typography>
-      )}
-      {children}
-    </Box>
-  </Container>
-);
+        {content && (
+          <Typography variant="body1" align="center">
+            {content}
+          </Typography>
+        )}
+        {children}
+      </Box>
+    </Container>
+  );
+};
 
 export default WaitingView;

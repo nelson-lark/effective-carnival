@@ -29,7 +29,7 @@ const TopAppBar: React.FC<Props> = ({
   const classes = useStyles();
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="default">
       <Toolbar>
         <IconButton
           edge="start"

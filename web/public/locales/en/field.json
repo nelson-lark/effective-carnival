@@ -4,6 +4,13 @@
   "Confirm Password": "Confirm Password",
   "Your password": "Your password",
   "Mobile phone": "Mobile phone",
+  "Mobile phone placeholder": "eg. +48 781 100 200",
   "Phone number": "Phone number",
-  "Email address": "Email address"
+  "Email address": "Email address",
+
+  "ID": "ID",
+  "Email": "Email",
+  "Enabled": "Enabled",
+  "Status": "Status",
+  "Last Modified": "Last Modified"
 }

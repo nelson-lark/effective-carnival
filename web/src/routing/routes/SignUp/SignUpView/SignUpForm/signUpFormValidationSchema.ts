@@ -1,4 +1,4 @@
-import { object, SchemaOf, string } from "yup";
+import { object, ref, SchemaOf, string } from "yup";
 
 import i18n from "@i18n/instance";
 
@@ -48,4 +48,16 @@ export default (): SchemaOf<SignUpFormState> =>
         })
       ),
     password: passwordValidation(),
+    confirmPassword: string()
+      .required(
+        i18n.t("validation:is a required field", {
+          field: i18n.t("field:Confirm Password"),
+        })
+      )
+      .oneOf(
+        [ref("password"), null],
+        i18n.t("validation:must be a match", {
+          field: i18n.t("field:Confirm Password"),
+        })
+      ),
   });

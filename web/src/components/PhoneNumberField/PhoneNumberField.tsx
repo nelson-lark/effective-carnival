@@ -6,7 +6,9 @@ import {
 } from "react-hook-form/dist/types/form";
 import { useTranslation } from "react-i18next";
 
-import { Box, TextField } from "@material-ui/core";
+import PhoneIcon from "@material-ui/icons/Phone";
+
+import { Box, InputAdornment, TextField } from "@material-ui/core";
 
 interface Props<T extends FieldValues> {
   name: Path<T>;
@@ -48,7 +50,7 @@ const PhoneNumberField = <T extends FieldValues>({
               autoComplete="tel"
               label={t("Mobile phone")}
               margin="normal"
-              placeholder={t("Mobile phone")}
+              placeholder={t("Mobile phone placeholder")}
               type="text"
               variant="outlined"
               error={!!error}
@@ -56,6 +58,11 @@ const PhoneNumberField = <T extends FieldValues>({
                 inputProps: {
                   "data-testid": dataTestId,
                 },
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PhoneIcon color="primary" />
+                  </InputAdornment>
+                ),
               }}
               helperText={error}
               required={required}

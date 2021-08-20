@@ -1,0 +1,10 @@
+mutation setUserStatus($statusInput: StatusInput!) {
+  user: setUserStatus(statusInput: $statusInput) {
+    id
+    email
+    phoneNumber
+    enabled
+    verified
+    updatedAt
+  }
+}

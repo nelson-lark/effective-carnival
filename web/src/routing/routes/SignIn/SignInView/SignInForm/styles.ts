@@ -11,4 +11,7 @@ export default makeStyles((theme) => ({
   error: {
     height: theme.spacing(3),
   },
+  forgot: {
+    textTransform: "capitalize",
+  },
 }));

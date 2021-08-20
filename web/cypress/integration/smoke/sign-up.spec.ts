@@ -4,7 +4,6 @@ import { indexPage } from "../../support/page-objects/methods/index-page";
 import { indexPageSelectors } from "../../support/page-objects/selectors/index-page";
 import { signUpPageSelectors } from "../../support/page-objects/selectors/sign-up-page";
 import { verifyEmailPage } from "../../support/page-objects/methods/verify-email-page";
-import { commonSelectors } from "../../support/page-objects/selectors/common-selectors";
 import { signInPage } from "../../support/page-objects/methods/sign-in-page";
 
 const user = createRandomUser();
@@ -18,10 +17,29 @@ describe("Sign up page test suite", () => {
 
   it("User is able to see password after clicking show password icon", () => {
     cy.fillInputField(signUpPageSelectors.passwordInput, user.correctPassword);
-    cy.clickOn(commonSelectors.showPasswordButton);
-    signInPage.checkThatPasswordFieldContainsCorrectValue(user.correctPassword);
-    cy.clickOn(commonSelectors.showPasswordButton);
-    signInPage.checkThatPasswordIsNotVisible();
+    signUpPage.clickOnShowPasswordIcon();
+    signInPage.checkThatPasswordFieldContainsCorrectValue(
+      signUpPageSelectors.passwordInput,
+      user.correctPassword
+    );
+    signUpPage.clickOnShowPasswordIcon();
+    signInPage.checkThatPasswordIsNotVisible(signUpPageSelectors.passwordInput);
+  });
+
+  it("User is able to see confirm password after clicking show password icon", () => {
+    cy.fillInputField(
+      signUpPageSelectors.confirmPasswordInput,
+      user.correctPassword
+    );
+    signUpPage.clickOnShowConfirmPasswordIcon();
+    signInPage.checkThatPasswordFieldContainsCorrectValue(
+      signUpPageSelectors.confirmPasswordInput,
+      user.correctPassword
+    );
+    signUpPage.clickOnShowConfirmPasswordIcon();
+    signInPage.checkThatPasswordIsNotVisible(
+      signUpPageSelectors.confirmPasswordInput
+    );
   });
 
   it("User is not able to sign up when email is missing", () => {
@@ -116,12 +134,12 @@ describe("Sign up page test suite", () => {
     cy.checkThatSubpageURLContains("/sign-up");
   });
 
-  it("User is able to sign up and see disabled resend email button", () => {
+  it("User is able to sign up and use resend email button", () => {
     cy.clearInputField(signUpPageSelectors.passwordInput);
     cy.fillInputField(signUpPageSelectors.passwordInput, user.correctPassword);
     cy.clickOn(signUpPageSelectors.signUpButton);
     cy.checkThatSubpageURLContains("/verify-email");
-    verifyEmailPage.checkThatResendButtonIsDisabled();
+    verifyEmailPage.checkThatResendButtonIsEnabled();
   });
 
   it("User is able to sign up, then sign in and then sign out", () => {
@@ -132,14 +150,14 @@ describe("Sign up page test suite", () => {
       user.correctPassword
     );
     cy.clickOn(signUpPageSelectors.signUpButton);
-    cy.checkThatSubpageURLContains("/verify-email")
-      .confirmUserSignUp(user.correctEmail)
-      .visit("/sign-in")
-      .loginAs({
-        email: user.correctEmail,
-        password: user.correctPassword,
-      })
-      .checkThatSubpageURLContains("/");
+    cy.checkThatSubpageURLContains("/verify-email");
+    cy.confirmUserSignUp(user.correctEmail);
+    cy.visit("/sign-in");
+    cy.loginAs({
+      email: user.correctEmail,
+      password: user.correctPassword,
+    });
+    cy.checkThatSubpageURLContains("/");
     indexPage.checkIfUserAvatarIsVisible();
     cy.clickOn(indexPageSelectors.userAvatarButton);
     indexPage.checkIfUserEmailIsShown(user.correctEmail);

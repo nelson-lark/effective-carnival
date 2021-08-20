@@ -64,7 +64,11 @@ const UserProfileMenu: React.FC<Props> = ({ onSendFeedbackClick }) => {
           <Avatar alt={user?.email} />
           <Box ml={1}>
             <Box data-testid="user-email-in-user-menu">{user?.email}</Box>
-            <Link component={NavLink} to={Paths.SETTINGS_PATH} underline="none">
+            <Link
+              component={NavLink}
+              to={Paths.SETTINGS_PATH}
+              color="secondary"
+              underline="none">
               {t("auth:Manage your Account")}
             </Link>
           </Box>

@@ -13,6 +13,7 @@ import rtl from "jss-rtl";
 import { create } from "jss";
 import { StylesProvider, jssPreset, Theme } from "@material-ui/core/styles";
 
+import palette from "@themes/palette";
 import createDefaultTheme from "@themes/defaultTheme";
 
 export interface ThemeContextValue {
@@ -43,9 +44,7 @@ const ThemeProvider: React.FC<Props> = ({ children }) => {
     () =>
       createDefaultTheme({
         direction,
-        palette: {
-          type: prefersDarkMode ? "dark" : "light",
-        },
+        palette: palette[prefersDarkMode ? "dark" : "light"],
       }),
     [direction, prefersDarkMode]
   );

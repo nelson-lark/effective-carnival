@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import AppShell from "@layouts/AppShell";
 import UserProvider from "@features/User/UserProvider";
 import ThemeProvider from "@features/Theme/ThemeProvider";
+import SnackProvider from "@features/Snack/SnackProvider";
 
 import useApolloClient from "../../apollo/useApolloClient";
 import useStyle from "./styles";
@@ -22,7 +23,9 @@ const Providers: React.FC = ({ children }) => {
           <React.Suspense
             fallback={<LinearProgress className={classes.progress} />}>
             <ThemeProvider>
-              <AppShell>{children}</AppShell>
+              <SnackProvider>
+                <AppShell>{children}</AppShell>
+              </SnackProvider>
             </ThemeProvider>
           </React.Suspense>
         </Router>

@@ -1,17 +1,13 @@
-import { signInPageSelectors } from "../selectors/sign-in-page";
-
 export const signInPage = {
-  checkThatPasswordFieldContainsCorrectValue: (password: string) => {
-    cy.getByDataTestId(signInPageSelectors.passwordInput).should(
-      "have.value",
-      password
-    );
-    cy.getByDataTestId(signInPageSelectors.passwordInput)
-      .invoke("attr", "type")
-      .should("eq", "text");
+  checkThatPasswordFieldContainsCorrectValue: (
+    selector: string,
+    password: string
+  ) => {
+    cy.getByDataTestId(selector).should("have.value", password);
+    cy.getByDataTestId(selector).invoke("attr", "type").should("eq", "text");
   },
-  checkThatPasswordIsNotVisible: () => {
-    cy.getByDataTestId(signInPageSelectors.passwordInput)
+  checkThatPasswordIsNotVisible: (selector: string) => {
+    cy.getByDataTestId(selector)
       .invoke("attr", "type")
       .should("eq", "password");
   },

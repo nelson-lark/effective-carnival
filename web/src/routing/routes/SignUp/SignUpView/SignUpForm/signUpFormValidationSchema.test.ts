@@ -9,6 +9,7 @@ describe("signUpFormValidationSchema()", () => {
         email: "test@test.com",
         phone: "+48777888999",
         password: "testTEST1234!@#$",
+        confirmPassword: "testTEST1234!@#$",
       })
     ).toBeTruthy();
   });
@@ -19,6 +20,7 @@ describe("signUpFormValidationSchema()", () => {
         email: "testtest.com",
         phone: "+48777888999",
         password: "testTEST1234!@#$",
+        confirmPassword: "testTEST1234!@#$",
       })
     ).toThrow();
   });
@@ -29,6 +31,7 @@ describe("signUpFormValidationSchema()", () => {
         email: "test@test.com",
         phone: "+487asd77888999",
         password: "testTEST1234!@#$",
+        confirmPassword: "testTEST1234!@#$",
       })
     ).toThrow();
   });
@@ -39,6 +42,7 @@ describe("signUpFormValidationSchema()", () => {
         email: "test@test.com",
         phone: "777888999",
         password: "testTEST1234!@#$",
+        confirmPassword: "testTEST1234!@#$",
       })
     ).toThrow();
   });
@@ -47,8 +51,20 @@ describe("signUpFormValidationSchema()", () => {
     expect(() =>
       signUpFormValidationSchema().validateSync({
         email: "test@test.com",
-        phone: "07624491791",
+        phone: "777888999",
         password: "testTEST1234!@#$",
+        confirmPassword: "testTEST1234!@#$",
+      })
+    ).toThrow();
+  });
+
+  it("should throw when confirm password is not matching password", () => {
+    expect(() =>
+      signUpFormValidationSchema().validateSync({
+        email: "test@test.com",
+        phone: "+48777888999",
+        password: "testTEST1234!@#$",
+        confirmPassword: "testTEST1234!@#$11",
       })
     ).toThrow();
   });
@@ -59,6 +75,7 @@ describe("signUpFormValidationSchema()", () => {
         email: "testtest.com",
         phone: "+48777888999",
         password: "testadada!@#$",
+        confirmPassword: "testadada!@#$",
       })
     ).toThrow();
   });
@@ -69,6 +86,7 @@ describe("signUpFormValidationSchema()", () => {
         email: "testtest.com",
         phone: "+48777888999",
         password: "testadada12312!@#$",
+        confirmPassword: "testadada12312!@#$",
       })
     ).toThrow();
   });
@@ -79,6 +97,7 @@ describe("signUpFormValidationSchema()", () => {
         email: "testtest.com",
         phone: "+48777888999",
         password: "ADADAD1231!@#$",
+        confirmPassword: "ADADAD1231!@#$",
       })
     ).toThrow();
   });
@@ -89,6 +108,7 @@ describe("signUpFormValidationSchema()", () => {
         email: "testtest.com",
         phone: "+48777888999",
         password: "As1",
+        confirmPassword: "As1",
       })
     ).toThrow();
   });
@@ -101,6 +121,7 @@ describe("signUpFormValidationSchema()", () => {
         email: `${emailSegment.repeat(12)}@test.com`,
         phone: "+48777888999",
         password: "testTEST1234!@#$",
+        confirmPassword: "testTEST1234!@#$",
       })
     ).toThrow(ValidationError);
   });

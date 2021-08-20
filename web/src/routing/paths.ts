@@ -1,5 +1,6 @@
 enum Paths {
-  ADMIN_PATH = "/admin",
+  ADMIN_FEEDBACKS_PATH = "/admin-feedbacks",
+  ADMIN_USERS_AND_GROUPS_PATH = "/admin-users-and-groups",
   BASE_LOGGED_IN = "/",
   CONFIRM_RESET_PASSWORD_PATH = "/confirm-reset-password",
   CONFIRM_SIGNUP_PATH = "/confirm-signup",

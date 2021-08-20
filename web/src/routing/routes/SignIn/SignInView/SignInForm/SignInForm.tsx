@@ -82,9 +82,10 @@ const SignInForm: React.FC<Props> = ({ error, loading, onSubmit }) => {
         <Grid item>
           <Link to={Paths.FORGOT_PASSWORD_PATH}>
             <Button
-              color="primary"
               variant="text"
-              data-testid="forgot-password-button">
+              color="secondary"
+              data-testid="forgot-password-button"
+              className={classes.forgot}>
               {t("Forgot Password?")}
             </Button>
           </Link>

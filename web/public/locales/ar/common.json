@@ -5,6 +5,7 @@
 
   "Error": "Error",
   "Upps, something went wrong": "Upps, something\n went wrong",
+  "Something went wrong. Please try again.": "Something went wrong. Please try again.",
 
   "and": "and",
 
@@ -17,5 +18,25 @@
   "Direction": "Direction",
 
   "Left to right": "Left to right",
-  "Right to left": "Right to left"
+  "Right to left": "Right to left",
+
+  "Feedbacks": "Feedbacks",
+  "Users and Groups": "Users and Groups",
+
+  "Search for value": "Search for value",
+  "Showing results of": "Showing {{count}} of {{total}}",
+  "selected": "(selected {{count}})",
+
+  "Create user": "Create user",
+  "Add to group": "Add to group",
+  "Enable": "Enable",
+  "Disable": "Disable",
+  "Email": "Email",
+
+  "All": "All",
+  "Enabled": "Enabled",
+  "Disabled": "Disabled",
+
+  "Confirmed": "Confirmed",
+  "Unconfirmed": "Unconfirmed"
 }

@@ -1,0 +1,14 @@
+query getUsers($args: GetUsersArgs!) {
+  users: getUsers(getUsersArgs: $args) {
+    items {
+      id
+      email
+      phoneNumber
+      enabled
+      verified
+      updatedAt
+    }
+    paginationToken
+    estimatedNumberOfUsers
+  }
+}

@@ -59,10 +59,10 @@ describe("<VerifyEmail />", () => {
     await act(async () => {
       jest.runAllTimers();
       fireEvent.click(buttonText);
-
-      const button = buttonText.closest("button");
-      expect(button).toBeDisabled();
       // TODO test Auth.resendSignUp();
     });
+
+    const button = buttonText.closest("button");
+    expect(button).toBeDisabled();
   });
 });

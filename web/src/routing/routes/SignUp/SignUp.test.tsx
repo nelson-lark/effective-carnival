@@ -11,6 +11,8 @@ import defaultTheme from "@themes/defaultTheme";
 
 import Paths from "@routing/paths";
 
+import AnalyticsEventName from "@enums/AnalyticsEventName";
+import SocialPlatform from "@enums/SocialPlatform";
 import SignUp from "./SignUp";
 
 const setup = (history?: MemoryHistory): void => {
@@ -31,7 +33,6 @@ describe("<SignUp />", () => {
   beforeAll(() => {
     Analytics.record = jest.fn();
   });
-
   it("should call Auth.signUp() function on form submit", async () => {
     Auth.signUp = jest.fn();
 
@@ -43,8 +44,13 @@ describe("<SignUp />", () => {
     const phoneInput = await screen.findByPlaceholderText(/Mobile phone/i);
     expect(phoneInput).toBeInTheDocument();
 
-    const passwordInput = await screen.findByPlaceholderText(/Password/i);
+    const passwordInput = await screen.findByPlaceholderText(/^Password/i);
     expect(passwordInput).toBeInTheDocument();
+
+    const confirmPasswordInput = await screen.findByPlaceholderText(
+      /Confirm password/i
+    );
+    expect(confirmPasswordInput).toBeInTheDocument();
 
     const signUpButton = await screen.findByText(/Sign Up/i);
     expect(signUpButton).toBeInTheDocument();
@@ -53,6 +59,10 @@ describe("<SignUp />", () => {
       fireEvent.change(emailInput, { target: { value: "test@test.com" } });
       fireEvent.change(phoneInput, { target: { value: "+48512051857" } });
       fireEvent.change(passwordInput, { target: { value: "Test123456" } });
+      fireEvent.change(confirmPasswordInput, {
+        target: { value: "Test123456" },
+      });
+
       fireEvent.click(signUpButton);
     });
 
@@ -82,8 +92,13 @@ describe("<SignUp />", () => {
     const phoneInput = await screen.findByPlaceholderText(/Mobile phone/i);
     expect(phoneInput).toBeInTheDocument();
 
-    const passwordInput = await screen.findByPlaceholderText(/Password/i);
+    const passwordInput = await screen.findByPlaceholderText(/^Password/i);
     expect(passwordInput).toBeInTheDocument();
+
+    const confirmPasswordInput = await screen.findByPlaceholderText(
+      /Confirm password/i
+    );
+    expect(confirmPasswordInput).toBeInTheDocument();
 
     const signUpButton = await screen.findByText(/Sign Up/i);
     expect(signUpButton).toBeInTheDocument();
@@ -92,6 +107,9 @@ describe("<SignUp />", () => {
       fireEvent.change(emailInput, { target: { value: "test@test.com" } });
       fireEvent.change(phoneInput, { target: { value: "+48512051857" } });
       fireEvent.change(passwordInput, { target: { value: "Test123456" } });
+      fireEvent.change(confirmPasswordInput, {
+        target: { value: "Test123456" },
+      });
       fireEvent.click(signUpButton);
     });
 
@@ -123,8 +141,13 @@ describe("<SignUp />", () => {
     const phoneInput = await screen.findByPlaceholderText(/Mobile phone/i);
     expect(phoneInput).toBeInTheDocument();
 
-    const passwordInput = await screen.findByPlaceholderText(/Password/i);
+    const passwordInput = await screen.findByPlaceholderText(/^Password/i);
     expect(passwordInput).toBeInTheDocument();
+
+    const confirmPasswordInput = await screen.findByPlaceholderText(
+      /Confirm password/i
+    );
+    expect(confirmPasswordInput).toBeInTheDocument();
 
     const signUpButton = await screen.findByText(/Sign Up/i);
     expect(signUpButton).toBeInTheDocument();
@@ -133,6 +156,10 @@ describe("<SignUp />", () => {
       fireEvent.change(emailInput, { target: { value: "test@test.com" } });
       fireEvent.change(phoneInput, { target: { value: "+48512051857" } });
       fireEvent.change(passwordInput, { target: { value: "Test123456" } });
+      fireEvent.change(confirmPasswordInput, {
+        target: { value: "Test123456" },
+      });
+
       fireEvent.click(signUpButton);
     });
 
@@ -162,8 +189,13 @@ describe("<SignUp />", () => {
     const phoneInput = await screen.findByPlaceholderText(/Mobile phone/i);
     expect(phoneInput).toBeInTheDocument();
 
-    const passwordInput = await screen.findByPlaceholderText(/Password/i);
+    const passwordInput = await screen.findByPlaceholderText(/^Password/i);
     expect(passwordInput).toBeInTheDocument();
+
+    const confirmPasswordInput = await screen.findByPlaceholderText(
+      /Confirm password/i
+    );
+    expect(confirmPasswordInput).toBeInTheDocument();
 
     const signUpButton = await screen.findByText(/Sign Up/i);
     expect(signUpButton).toBeInTheDocument();
@@ -172,11 +204,61 @@ describe("<SignUp />", () => {
       fireEvent.change(emailInput, { target: { value: "test@test.com" } });
       fireEvent.change(phoneInput, { target: { value: "+48512051857" } });
       fireEvent.change(passwordInput, { target: { value: "Test123456" } });
+      fireEvent.change(confirmPasswordInput, {
+        target: { value: "Test123456" },
+      });
+
       fireEvent.click(signUpButton);
       await new Promise<void>((res) => setTimeout(() => res(), 500));
       fireEvent.click(signUpButton);
     });
 
     expect(Auth.signUp).toBeCalledTimes(1);
+  });
+
+  Object.values(SocialPlatform).forEach((socialPlatform) => {
+    it(`should record ${socialPlatform} social login`, async () => {
+      Auth.federatedSignIn = jest.fn();
+
+      setup();
+
+      const socialLogin = await screen.findByLabelText(
+        `Sign up with ${socialPlatform}`
+      );
+
+      expect(socialLogin).toBeInTheDocument();
+
+      await act(async () => {
+        fireEvent.click(socialLogin);
+      });
+
+      expect(Analytics.record).toBeCalledWith({
+        name: AnalyticsEventName.SignUp,
+        attributes: {
+          method: "social",
+          platform: socialPlatform,
+        },
+      });
+    });
+  });
+
+  it(`should record Google social login failure`, async () => {
+    Auth.federatedSignIn = jest.fn().mockImplementation(() => {
+      throw new Error("");
+    });
+
+    setup();
+
+    const googleSocialLogin = await screen.findByLabelText(
+      /Sign up with Google/i
+    );
+
+    expect(googleSocialLogin).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(googleSocialLogin);
+    });
+
+    expect(Auth.federatedSignIn).toBeCalled();
   });
 });

@@ -4,6 +4,13 @@
   "Confirm Password": "Powtórz hasło",
   "Your password": "Twoje hasło",
   "Mobile phone": "Telefon komórkowy",
+  "Mobile phone placeholder": "np. +48 781 100 200",
   "Phone number": "Numer telefonu",
-  "Email address": "Adres email"
+  "Email address": "Adres email",
+
+  "ID": "Identyfikator",
+  "Email": "Email",
+  "Enabled": "Włączony",
+  "Status": "Status",
+  "Last Modified": "Ostatnia Modyfikacja"
 }

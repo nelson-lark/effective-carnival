@@ -18,6 +18,7 @@ const defaultValues: SignUpFormState = {
   email: "",
   phone: "",
   password: "",
+  confirmPassword: "",
 };
 
 interface Props {
@@ -74,6 +75,17 @@ const SignUpForm: React.FC<Props> = ({ loading, onSubmit }) => {
         password={watchPassword}
         visible={!!errors?.password}
         validation={["(?=.*[a-z])", "(?=.*[A-Z])", "(?=.*[0-9])", "(?=.{10,})"]}
+      />
+      <PasswordField
+        id="confirm-password"
+        name="confirmPassword"
+        control={control}
+        error={errors.confirmPassword?.message}
+        label={t("field:Confirm Password")}
+        placeholder={t("field:Confirm Password")}
+        dataTestId="confirm-password-input-field"
+        autoComplete="new-password"
+        labelWidth={120}
       />
       <Box display="flex" flexDirection="row" alignItems="center" mt={2}>
         <Button

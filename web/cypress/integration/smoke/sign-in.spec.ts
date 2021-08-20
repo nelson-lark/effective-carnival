@@ -15,9 +15,12 @@ describe("Sign in page test suite", () => {
   it("User is able to see password after clicking show password icon", () => {
     cy.fillInputField(signInPageSelectors.passwordInput, user.correctPassword);
     cy.clickOn(commonSelectors.showPasswordButton);
-    signInPage.checkThatPasswordFieldContainsCorrectValue(user.correctPassword);
+    signInPage.checkThatPasswordFieldContainsCorrectValue(
+      signInPageSelectors.passwordInput,
+      user.correctPassword
+    );
     cy.clickOn(commonSelectors.showPasswordButton);
-    signInPage.checkThatPasswordIsNotVisible();
+    signInPage.checkThatPasswordIsNotVisible(signInPageSelectors.passwordInput);
   });
 
   it("User is not able to sign in when email is missing", () => {

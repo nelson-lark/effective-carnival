@@ -64,7 +64,7 @@ const NavigationDrawer: React.FC<Props> = ({
         justifyContent="space-between"
         height="100%">
         <Box>
-          <AppBar position="static">
+          <AppBar position="static" color="default">
             <Toolbar>
               <IconButton
                 edge="start"
@@ -86,13 +86,25 @@ const NavigationDrawer: React.FC<Props> = ({
                   button
                   data-testid="admin-button-in-side-menu"
                   component={NavLink}
-                  to={Paths.ADMIN_PATH}
+                  to={Paths.ADMIN_FEEDBACKS_PATH}
                   exact
                   activeClassName={classes.active}>
                   <ListItemIcon>
                     <SupervisorAccountIcon />
                   </ListItemIcon>
-                  <ListItemText primary={t("Admin")} />
+                  <ListItemText primary={t("Feedbacks")} />
+                </ListItem>
+                <ListItem
+                  button
+                  data-testid="admin-button-in-side-menu"
+                  component={NavLink}
+                  to={Paths.ADMIN_USERS_AND_GROUPS_PATH}
+                  exact
+                  activeClassName={classes.active}>
+                  <ListItemIcon>
+                    <SupervisorAccountIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={t("Users and Groups")} />
                 </ListItem>
                 <Divider />
               </>

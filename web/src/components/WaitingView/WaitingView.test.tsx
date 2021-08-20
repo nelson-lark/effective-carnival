@@ -7,7 +7,7 @@ import WaitingView from "@components/WaitingView/WaitingView";
 const setup = (warning?: boolean) =>
   render(
     <ThemeProvider theme={defaultTheme()}>
-      <WaitingView title="test" warning={warning} />
+      <WaitingView title="test" warning={warning} withIcon />
     </ThemeProvider>
   );
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 
 import { Redirect, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -8,8 +8,6 @@ import { useTranslation } from "react-i18next";
 import { Auth } from "aws-amplify";
 
 import { Box, Button, Container, Grid, Typography } from "@material-ui/core";
-
-import { DISABLE_RESEND_EMAIL_TIMEOUT_MILLISECONDS } from "@consts/index";
 
 import AnalyticsEventName from "@enums/AnalyticsEventName";
 import AnalyticsEventResult from "@enums/AnalyticsEventResult";
@@ -33,19 +31,7 @@ const VerifyEmail: React.FC = () => {
   const classes = useStyle();
   const { state } = useLocation<LocationState>();
 
-  const [disabled, setDisabled] = useState<boolean>(true);
-
-  const timer = useRef<number>();
-
-  useEffect(() => {
-    timer.current = window.setTimeout(() => {
-      setDisabled(false);
-    }, DISABLE_RESEND_EMAIL_TIMEOUT_MILLISECONDS);
-
-    return () => {
-      clearTimeout(timer.current);
-    };
-  }, [disabled, timer]);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   async function handleResendEmail() {
     try {
@@ -59,8 +45,6 @@ const VerifyEmail: React.FC = () => {
       });
     } catch (err) {
       setDisabled(false);
-
-      clearTimeout(timer.current);
 
       recordEvent({
         name: AnalyticsEventName.ResendSignUp,
@@ -88,7 +72,10 @@ const VerifyEmail: React.FC = () => {
           </Typography>
 
           <Box pt={1.1} pb={1.3} my={1.5}>
-            <Typography variant="body1" className={classes.email}>
+            <Typography
+              variant="body1"
+              color="primary"
+              className={classes.email}>
               {state?.email}
             </Typography>
           </Box>

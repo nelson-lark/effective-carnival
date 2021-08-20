@@ -5,6 +5,7 @@
 
   "Error": "Błąd",
   "Upps, something went wrong": "Upps, coś\n poszło nie tak",
+  "Something went wrong. Please try again.": "Coś poszło nie tak. Spróbuj ponownie.",
 
   "and": "i",
 
@@ -17,5 +18,24 @@
   "Direction": "Kierunek",
 
   "Left to right": "Od lewej do prawej",
-  "Right to left": "Od prawej do lewej"
+  "Right to left": "Od prawej do lewej",
+
+  "Feedbacks": "Opinie",
+  "Users and Groups": "Użytkownicy i Grupy",
+
+  "Search for value": "Szukaj wartości",
+  "Showing results of": "Pokazano {{count}} z {{total}}",
+  "selected": "(zaznaczono {{count}})",
+
+  "Create user": "Stwórz użytkownika",
+  "Add to group": "Dodaj do grupy",
+  "Enable": "Włącz",
+  "Disable": "Wyłącz",
+  "Email": "Email",
+
+  "Enabled": "Włączony",
+  "Disabled": "Wyłączony",
+
+  "Confirmed": "Zatwierdzony",
+  "Unconfirmed": "Niezatwierdzony"
 }
