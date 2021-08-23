@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import { Box, Button } from "@material-ui/core";
 
-import PageLayout from "@layouts/PageLayout";
+import AuthLayout from "@layouts/AuthLayout";
 
 import Paths from "@routing/paths";
 
@@ -17,7 +17,7 @@ const ConfirmReset: React.FC = () => {
   const { t } = useTranslation("auth");
 
   return (
-    <PageLayout pb={7}>
+    <AuthLayout>
       <Helmet>
         <title>{t("Resetting your password")}</title>
       </Helmet>
@@ -29,7 +29,7 @@ const ConfirmReset: React.FC = () => {
         <Box mt={3.5}>
           <Link to={Paths.SIGN_IN_PATH}>
             <Button
-              color="primary"
+              color="secondary"
               variant="text"
               data-testid="back-to-sigg-in-button">
               {t("Back to sign in page")}
@@ -37,7 +37,7 @@ const ConfirmReset: React.FC = () => {
           </Link>
         </Box>
       </WaitingView>
-    </PageLayout>
+    </AuthLayout>
   );
 };
 

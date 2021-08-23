@@ -92,6 +92,7 @@ const SendFeedbackModal: React.FC<Props> = ({
                 )}
                 error={!!errors.description?.message}
                 helperText={errors.description?.message}
+                color="secondary"
                 multiline
                 autoFocus
                 fullWidth
@@ -104,8 +105,8 @@ const SendFeedbackModal: React.FC<Props> = ({
             <div className={classes.wrapper}>
               <Button
                 type="submit"
-                data-testid="send-feedback-button-in-modal"
-                color="primary"
+                data-testid="send-feedback-send-button"
+                color="secondary"
                 disabled={sending}>
                 {t("Send")}
               </Button>
@@ -117,7 +118,7 @@ const SendFeedbackModal: React.FC<Props> = ({
               )}
             </div>
             <Button
-              data-testid="cancel-feedback-button-in-modal"
+              data-testid="send-feedback-cancel-button"
               onClick={handleClose}>
               {t("Cancel")}
             </Button>

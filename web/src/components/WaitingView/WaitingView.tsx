@@ -41,7 +41,6 @@ const WaitingView: React.FC<Props> = ({
           {icon}
           {progress && <CircularProgress />}
         </Box>
-
         <Typography variant="h4" align="center" gutterBottom>
           {title}
         </Typography>

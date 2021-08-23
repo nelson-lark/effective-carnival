@@ -179,20 +179,35 @@ const UsersAndGroupsView: React.FC = () => {
     <TabContext value={tab}>
       <div className={styles.tabHeader}>
         <Tabs value={tab} onChange={handleTabChange} textColor="secondary">
-          <MuiTab value={Tab.Users} label="Users" className={styles.tab} />
-          <MuiTab value={Tab.Groups} label="Groups" className={styles.tab} />
+          <MuiTab
+            value={Tab.Users}
+            label="Users"
+            data-testid="users-tab"
+            className={styles.tab}
+          />
+          <MuiTab
+            value={Tab.Groups}
+            label="Groups"
+            data-testid="groups-tab"
+            className={styles.tab}
+          />
         </Tabs>
         <div className={styles.tabHeaderAction}>
-          <Button color="primary" variant="contained">
+          <Button
+            color="primary"
+            data-testid="create-user-button"
+            variant="contained">
             {t("Create user")}
           </Button>
-          <Button>{t("Add to group")}</Button>
+          <Button data-testid="add-to-group-button">{t("Add to group")}</Button>
           <Button
+            data-testid="enable-user-button"
             disabled={isUpdateStatusButtonDisabled}
             onClick={() => handleStatusChange(true)}>
             {t("Enable")}
           </Button>
           <Button
+            data-testid="disable-user-button"
             disabled={isUpdateStatusButtonDisabled}
             onClick={() => handleStatusChange(false)}>
             {t("Disable")}

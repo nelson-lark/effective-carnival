@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import Paths from "@routing/paths";
 import SocialPlatform from "@enums/SocialPlatform";
 
-import PageLayout from "@layouts/PageLayout";
+import AuthLayout from "@layouts/AuthLayout";
 
 import AuthBottomBar from "@components/AuthBottomBar";
 import SocialAuthButtons from "@components/SocialAuthButtons";
@@ -23,7 +23,7 @@ const SignUpView: React.FC<Props> = ({ loading, onSignUp, onSocialSignUp }) => {
   const { t } = useTranslation("auth");
 
   return (
-    <PageLayout>
+    <AuthLayout>
       <Helmet>
         <title>{t("Create your account")}</title>
       </Helmet>
@@ -42,7 +42,7 @@ const SignUpView: React.FC<Props> = ({ loading, onSignUp, onSocialSignUp }) => {
         buttonText={t("Sign in")}
         dataTestId="go-to-sign-in-page-button"
       />
-    </PageLayout>
+    </AuthLayout>
   );
 };
 

@@ -53,6 +53,7 @@ const PhoneNumberField = <T extends FieldValues>({
               placeholder={t("Mobile phone placeholder")}
               type="text"
               variant="outlined"
+              color="secondary"
               error={!!error}
               InputProps={{
                 inputProps: {
@@ -60,7 +61,7 @@ const PhoneNumberField = <T extends FieldValues>({
                 },
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PhoneIcon color="primary" />
+                    <PhoneIcon color="secondary" />
                   </InputAdornment>
                 ),
               }}

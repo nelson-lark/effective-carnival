@@ -48,6 +48,7 @@ const FormTextInputField = <T extends FieldValues>({
         placeholder={placeHolder}
         type={type}
         variant="outlined"
+        color="secondary"
         error={error}
         helperText={helperText}
         InputProps={{

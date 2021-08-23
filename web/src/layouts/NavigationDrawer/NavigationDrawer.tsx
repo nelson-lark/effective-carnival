@@ -68,7 +68,7 @@ const NavigationDrawer: React.FC<Props> = ({
             <Toolbar>
               <IconButton
                 edge="start"
-                data-testid="close-side-menu-button"
+                data-testid="close-button-in-side-menu"
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="menu"
@@ -84,7 +84,7 @@ const NavigationDrawer: React.FC<Props> = ({
               <>
                 <ListItem
                   button
-                  data-testid="admin-button-in-side-menu"
+                  data-testid="feedbacks-button-in-side-menu"
                   component={NavLink}
                   to={Paths.ADMIN_FEEDBACKS_PATH}
                   exact
@@ -96,7 +96,7 @@ const NavigationDrawer: React.FC<Props> = ({
                 </ListItem>
                 <ListItem
                   button
-                  data-testid="admin-button-in-side-menu"
+                  data-testid="users-managment-button-in-side-menu"
                   component={NavLink}
                   to={Paths.ADMIN_USERS_AND_GROUPS_PATH}
                   exact

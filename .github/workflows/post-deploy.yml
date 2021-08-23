@@ -67,18 +67,19 @@ jobs:
         run: |
           GITHUB_PULL_REQUEST_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           echo "AWS_AMPLIFY_BRANCH_NAME=pr-$(echo $GITHUB_PULL_REQUEST_NUMBER)" >> $GITHUB_ENV
-      - name: Cypress
+      - name: Cypress - smoke tests
         working-directory: ./web
         run: |
           source ../cloud/scripts/setEnvs.bash
           cp .env.test.example .env.test
           sed -i "s|http://localhost:3000|https://${AWS_AMPLIFY_BRANCH_NAME}.${AWS_AMPLIFY_APP_ID}.amplifyapp.com|g" .env.test
           sed -i "s|CYPRESS_AWS_COGNITO_USER_POOL_ID=<your_value>|CYPRESS_AWS_COGNITO_USER_POOL_ID=${REACT_APP_EFFECTIVE_CARNIVAL_AWS_COGNITO_USER_POOL_ID}|g" .env.test
-          yarn cy:run
+          yarn cy:run:smoke
         env:
           AWS_AMPLIFY_APP_ID: ${{ secrets.AWS_AMPLIFY_APP_ID_DEVELOP }}
           AWS_AMPLIFY_BRANCH_NAME: ${{ env.AWS_AMPLIFY_BRANCH_NAME }}
-      - name: Upload screenshots as artifacts
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+      - name: Upload artifacts
         uses: actions/upload-artifact@v1
         if: failure()
         with:

@@ -3,7 +3,7 @@ import { Box, Container, Typography } from "@material-ui/core";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
-import PageLayout from "@layouts/PageLayout";
+import AuthLayout from "@layouts/AuthLayout";
 import ForgotPasswordForm, { ForgotPasswordState } from "./ForgotPasswordForm";
 
 interface OnReset {
@@ -15,7 +15,7 @@ const ForgotPasswordView: React.FC<OnReset> = ({ onReset, disabled }) => {
   const { t } = useTranslation("auth");
 
   return (
-    <PageLayout pb={5}>
+    <AuthLayout>
       <Helmet>
         <title>{t("Forgot password")}</title>
       </Helmet>
@@ -34,7 +34,7 @@ const ForgotPasswordView: React.FC<OnReset> = ({ onReset, disabled }) => {
         </Box>
         <ForgotPasswordForm onReset={onReset} disabled={disabled} />
       </Container>
-    </PageLayout>
+    </AuthLayout>
   );
 };
 

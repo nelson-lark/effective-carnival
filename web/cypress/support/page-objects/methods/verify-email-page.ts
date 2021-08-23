@@ -1,9 +1,7 @@
-import { verifyEmailPageSelectors } from "../selectors/verify-email-page";
+import { authSelectors } from "../selectors/auth-selectors";
 
 export const verifyEmailPage = {
   checkThatResendButtonIsEnabled: () => {
-    cy.getByDataTestId(verifyEmailPageSelectors.resendEmailButton).should(
-      "be.enabled"
-    );
+    cy.getByDataTestId(authSelectors.resendEmailButton).should("be.enabled");
   },
 } as const;

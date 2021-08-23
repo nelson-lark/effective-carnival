@@ -60,6 +60,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ onSavePassword }) => {
         label={t("field:Confirm Password")}
         placeholder={t("field:Confirm Password")}
         dataTestId="confirm-password-input-field"
+        adornmentDataTestId="show-confirm-password-button"
         autoComplete="new-password"
         labelWidth={120}
       />
@@ -80,7 +81,7 @@ const CreateNewPasswordForm: React.FC<Props> = ({ onSavePassword }) => {
           }}
           data-testid="cancel-new-password-button"
           variant="text"
-          color="primary"
+          color="secondary"
           fullWidth>
           {t("common:Cancel")}
         </Button>

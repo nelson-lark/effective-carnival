@@ -1,4 +1,4 @@
-import { sendFeedbackSelectors } from "../selectors/send-feedback";
+import { sendFeedbackSelectors } from "../selectors/send-feedback-modal";
 
 export const sendFeedback = {
   modalIsVisible: () => {
@@ -10,14 +10,5 @@ export const sendFeedback = {
     cy.getByDataTestId(sendFeedbackSelectors.modalContainer).should(
       "not.exist"
     );
-  },
-  clickOnCancelButton: () => {
-    cy.getByDataTestId(sendFeedbackSelectors.cancelButton).click();
-  },
-  clickOnSendButton: () => {
-    cy.getByDataTestId(sendFeedbackSelectors.sendButton).click();
-  },
-  typeMessage: (text: string) => {
-    cy.getByDataTestId(sendFeedbackSelectors.textareaInput).type(text);
   },
 } as const;

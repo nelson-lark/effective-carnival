@@ -1,4 +1,5 @@
 {
+  "integrationFolder": "cypress/tests",
   "defaultCommandTimeout": 12000,
   "requestTimeout": 20000,
   "responseTimeout": 20000,

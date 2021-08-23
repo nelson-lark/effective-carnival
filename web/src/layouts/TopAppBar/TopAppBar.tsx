@@ -36,7 +36,7 @@ const TopAppBar: React.FC<Props> = ({
           className={classes.menuButton}
           color="inherit"
           aria-label="menu"
-          data-testid="open-side-menu-button"
+          data-testid="open-button-in-side-menu"
           onClick={onMenuButtonClick}>
           <MenuIcon />
         </IconButton>

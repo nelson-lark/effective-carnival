@@ -84,6 +84,7 @@ const SignUpForm: React.FC<Props> = ({ loading, onSubmit }) => {
         label={t("field:Confirm Password")}
         placeholder={t("field:Confirm Password")}
         dataTestId="confirm-password-input-field"
+        adornmentDataTestId="show-confirm-password-button"
         autoComplete="new-password"
         labelWidth={120}
       />

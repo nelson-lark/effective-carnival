@@ -1,8 +1,9 @@
 export const indexPageSelectors = {
   sideMenuDrawerContainer: "side-menu-drawer-container",
-  sideMenuOpenButton: "open-side-menu-button",
-  closeSideMenuButton: "close-side-menu-button",
-  adminButtonInSideMenu: "admin-button-in-side-menu",
+  openButtonInSideMenu: "open-button-in-side-menu",
+  closeButtonInSideMenu: "close-button-in-side-menu",
+  feedbacksButtonInSideMenu: "feedbacks-button-in-side-menu",
+  usersManagmentButtonInSideMenu: "users-managment-button-in-side-menu",
   settingsButtonInSideMenu: "settings-button-in-side-menu",
   sendFeedbackButtonInSideMenu: "send-feedback-button-in-side-menu",
   helpButtonInSideMenu: "help-button-in-side-menu",

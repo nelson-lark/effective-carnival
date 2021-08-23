@@ -17,7 +17,7 @@ import { recordEvent } from "@utils/analytics";
 import Paths from "@routing/paths";
 
 import Link from "@components/Link";
-import PageLayout from "@layouts/PageLayout";
+import AuthLayout from "@layouts/AuthLayout";
 
 import useStyle from "./styles";
 
@@ -56,7 +56,7 @@ const VerifyEmail: React.FC = () => {
   if (!state?.email) return <Redirect to="/" />;
 
   return (
-    <PageLayout pb={5}>
+    <AuthLayout>
       <Container maxWidth="xs">
         <Helmet>
           <title>{t("Verify email")}</title>
@@ -74,7 +74,7 @@ const VerifyEmail: React.FC = () => {
           <Box pt={1.1} pb={1.3} my={1.5}>
             <Typography
               variant="body1"
-              color="primary"
+              color="secondary"
               className={classes.email}>
               {state?.email}
             </Typography>
@@ -109,7 +109,7 @@ const VerifyEmail: React.FC = () => {
             <Grid item xs={12}>
               <Link to={Paths.SIGN_IN_PATH}>
                 <Button
-                  color="primary"
+                  color="secondary"
                   variant="text"
                   data-testid="back-to-sigg-in-button"
                   fullWidth>
@@ -120,7 +120,7 @@ const VerifyEmail: React.FC = () => {
           </Grid>
         </Box>
       </Container>
-    </PageLayout>
+    </AuthLayout>
   );
 };
 

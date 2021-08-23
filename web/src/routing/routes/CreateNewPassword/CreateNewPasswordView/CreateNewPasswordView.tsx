@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 
 import { useTranslation } from "react-i18next";
 
-import PageLayout from "@layouts/PageLayout";
+import AuthLayout from "@layouts/AuthLayout";
 
 import CreateNewPasswordForm from "./CreateaNewPasswordForm";
 import CreateNewPasswordState from "./CreateaNewPasswordForm/CreateNewPasswordState";
@@ -19,7 +19,7 @@ const CreateNewPasswordView: React.FC<Props> = ({ onSavePassword }) => {
   const { t } = useTranslation("auth");
 
   return (
-    <PageLayout pb={5}>
+    <AuthLayout>
       <Helmet>
         <title>{t("Create new password")}</title>
       </Helmet>
@@ -36,7 +36,7 @@ const CreateNewPasswordView: React.FC<Props> = ({ onSavePassword }) => {
           <CreateNewPasswordForm onSavePassword={onSavePassword} />
         </Box>
       </Container>
-    </PageLayout>
+    </AuthLayout>
   );
 };
 

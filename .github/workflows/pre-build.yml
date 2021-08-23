@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         working-directory: ./web
         run: yarn install
-      - name: Frontend tests
+      - name: Web tests
         working-directory: ./web
         run: yarn test:nowatch
         env:

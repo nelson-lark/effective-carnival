@@ -58,12 +58,12 @@ const ForgotPasswordForm: React.FC<Props> = ({ onReset, disabled }) => {
         </Box>
         <Box mt={2.5} display="flex" flexDirection="column" alignItems="center">
           <Button
-            data-testid="back-to-sign-in-page-button"
+            data-testid="go-to-sign-in-page-button"
             onClick={() => {
               history.push(Paths.SIGN_IN_PATH);
             }}
             variant="text"
-            color="primary"
+            color="secondary"
             fullWidth>
             {t("Back to sign in page")}
           </Button>

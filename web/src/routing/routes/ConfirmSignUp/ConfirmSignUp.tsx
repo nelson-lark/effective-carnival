@@ -6,7 +6,7 @@ import { Redirect, useHistory } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
-import PageLayout from "@layouts/PageLayout";
+import AuthLayout from "@layouts/AuthLayout";
 
 import Paths from "@routing/paths";
 
@@ -53,7 +53,7 @@ const ConfirmSignUp: React.FC = () => {
   if (!username || !code) return <Redirect to="/" />;
 
   return (
-    <PageLayout pb={7}>
+    <AuthLayout>
       <Helmet>
         <title>{t("Verifying your email")}</title>
       </Helmet>
@@ -61,7 +61,7 @@ const ConfirmSignUp: React.FC = () => {
         title={t("Please be patient for a while")}
         content={t("We are currently verifying your email.")}
       />
-    </PageLayout>
+    </AuthLayout>
   );
 };
 

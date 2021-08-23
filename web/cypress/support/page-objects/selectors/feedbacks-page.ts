@@ -1,4 +1,4 @@
-export const adminPageSelectors = {
+export const feedbacksTableSelectors = {
   feedbackTable: "feedback-table",
   feedbackTableHead: "feedback-table-head",
   feedbackTableHeadRow: "feedback-table-head-row",

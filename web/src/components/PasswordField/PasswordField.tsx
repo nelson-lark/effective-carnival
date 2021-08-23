@@ -22,6 +22,7 @@ interface Props<T extends FieldValues> {
   error: string | undefined;
   label: string;
   dataTestId?: string;
+  adornmentDataTestId?: string;
   placeholder?: string;
   autoFocus?: boolean;
   autoComplete?: string;
@@ -36,6 +37,7 @@ const PasswordField = <T extends FieldValues>({
   label,
   control,
   dataTestId = "password-input-field",
+  adornmentDataTestId = "show-password-button",
   placeholder,
   autoComplete,
   autoFocus,
@@ -74,16 +76,16 @@ const PasswordField = <T extends FieldValues>({
             <Tooltip title={visibilityButtonLabel(showPassword)}>
               <IconButton
                 aria-controls={id}
+                data-testid={adornmentDataTestId}
                 aria-expanded={showPassword}
                 aria-label={visibilityButtonLabel(showPassword)}
                 onClick={handleClickShowPassword}
-                data-testid="show-password-button"
                 onMouseDown={handleMouseDownPassword}
                 edge="end">
                 {showPassword ? (
-                  <VisibilityOffIcon htmlColor={theme.palette.primary.dark} />
+                  <VisibilityOffIcon htmlColor={theme.palette.secondary.dark} />
                 ) : (
-                  <VisibilityIcon htmlColor={theme.palette.primary.light} />
+                  <VisibilityIcon htmlColor={theme.palette.secondary.light} />
                 )}
               </IconButton>
             </Tooltip>
@@ -91,7 +93,7 @@ const PasswordField = <T extends FieldValues>({
         ),
         startAdornment: (
           <InputAdornment position="start">
-            <LockIcon color="primary" />
+            <LockIcon color="secondary" />
           </InputAdornment>
         ),
         labelWidth,

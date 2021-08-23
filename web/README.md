@@ -41,18 +41,6 @@ yarn cy:open
 yarn cy:run
 ```
 
-#### Run Cypress smoke tests in the headless mode:
-
-```
-yarn cy:run:smoke
-```
-
-#### Run Cypress regression tests in the headless mode:
-
-```
-yarn cy:run:regression
-```
-
 ## Code coverage
 
 If you want to generate code coverage report after the Cypress tests you should run the server via command:

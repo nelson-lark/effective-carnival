@@ -110,8 +110,6 @@
     "cy:format": "prettier --ignore-path ./cypress/.prettierignore --write \"./cypress/**/*.{ts,json}\"",
     "cy:open": "cypress open --config-file ./cypress/cypress.json",
     "cy:run": "percy exec -c ./cypress/.percy.json -- cypress run --config-file ./cypress/cypress.json -b chrome",
-    "cy:run:smoke": "percy exec -c ./cypress/.percy.json -- cypress run --config-file ./cypress/cypress.json -b chrome -s \"./cypress/integration/smoke/*\"",
-    "cy:run:regression": "percy exec -c ./cypress/.percy.json -- cypress run --config-file ./cypress/cypress.json -b chrome -s \"./cypress/integration/regression/*\"",
     "cy:coverage:start": "react-app-rewired -r @cypress/instrument-cra start",
     "cy:mocha:clean": "rm -rf ./cypress/reports/mochawesome || true",
     "cy:mocha:combine": "mochawesome-merge ./cypress/reports/mochawesome/single-specs/*.json -o ./cypress/reports/mochawesome/final-report/summary.json",

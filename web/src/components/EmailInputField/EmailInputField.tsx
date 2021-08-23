@@ -46,7 +46,7 @@ const EmailInputField = <T extends FieldValues>({
     InputProps={{
       startAdornment: (
         <InputAdornment position="start">
-          <MailIcon color="primary" />
+          <MailIcon color="secondary" />
         </InputAdornment>
       ),
     }}
