@@ -44,7 +44,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.10",
     "@cypress/instrument-cra": "^1.4.0",
-    "@graphql-codegen/cli": "^1.21.4",
+    "@graphql-codegen/cli": "^2.2.0",
     "@graphql-codegen/near-operation-file-preset": "^1.18.0",
     "@graphql-codegen/typescript": "^1.22.0",
     "@graphql-codegen/typescript-operations": "^1.17.16",
