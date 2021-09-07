@@ -24,7 +24,7 @@
     "i18next": "20.3.1",
     "i18next-browser-languagedetector": "6.1.1",
     "i18next-chained-backend": "^3.0.2",
-    "i18next-http-backend": "1.2.6",
+    "i18next-http-backend": "1.3.1",
     "i18next-localstorage-backend": "^3.1.2",
     "jest-localstorage-mock": "^2.4.12",
     "jss": "^10.6.0",
