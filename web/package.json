@@ -61,7 +61,7 @@
     "@types/jest": "^26.0.23",
     "@types/lodash": "^4.14.169",
     "@types/mochawesome": "^6.2.0",
-    "@types/node": "^12.20.12",
+    "@types/node": "^16.9.1",
     "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.3",
     "@types/react-helmet": "^6.1.1",
