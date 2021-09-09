@@ -25,7 +25,7 @@
   "devDependencies": {
     "@aws-cdk/assert": "1.104.0",
     "@aws-cdk/aws-amplify": "1.104.0",
-    "@aws-cdk/aws-appsync": "1.104.0",
+    "@aws-cdk/aws-appsync": "1.122.0",
     "@aws-cdk/aws-cloudfront-origins": "1.104.0",
     "@aws-cdk/aws-elasticsearch": "1.104.0",
     "@aws-cdk/aws-iam": "1.104.0",
