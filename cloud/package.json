@@ -67,7 +67,7 @@
     "@aws-cdk/core": "1.104.0",
     "@elastic/elasticsearch": "7.13.0",
     "aws-elasticsearch-connector": "9.0.3",
-    "aws-sdk": "2.888.0",
+    "aws-sdk": "2.989.0",
     "chrome-aws-lambda": "^10.0.0",
     "puppeteer-core": "^10.1.0",
     "interpolate-json": "2.1.3",
